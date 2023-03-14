@@ -38,9 +38,9 @@ const QuestionSec = () => {
   }
   const nextStep = () => {
     if (percentage === 100) return;
-    setPercentage((prevPercentage) => prevPercentage + 3);
+    setPercentage((prevPercentage) => prevPercentage + 20);
   };
-  const backStep = () => {
+  const backStep = () => {s
     if (percentage === 0) return;
     setPercentage((prevPercentage) => prevPercentage - 20);
   };
