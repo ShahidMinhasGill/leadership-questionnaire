@@ -64,31 +64,17 @@ const QuestionSec = () => {
           </div>
           <ProgressBar percentage={percentage} />
         </div>
-
-        {/* <div className="col-6">hhhh</div> */}
-        {/* <div className="col-6">hhhh</div> */}
-        {/* <div className="col-3">
-        <button onClick={nextStep}>Next Step</button>
-        </div>
-        <div className="col-9  align-items-center" style={{border:'1px solid  red'}}>
-        <h3>Quistion 5 of 23</h3>
-          
-        <ProgressBar percentage={percentage} />
-        </div> */}
       </div>
       <div className="row ask-quistion d-flex justify-content-center mt-5">
         <div className="col-11 d-flex">
           <div className="col-1 text-center">
             <h2>5</h2>
           </div>
-          <div className="col-8 ">
+          <div className="col-lg-8 col-md-12 ">
             <h2>
             {currentData.map(item => (
           <li key={item.id}>{item.name}</li>
         ))}
-              {/* Before making a decision, I always consult information from
-              another people who have been in a simillar postion to make sure i
-              understand the full implications of my actions */}
             </h2>
           </div>
         </div>
@@ -96,8 +82,8 @@ const QuestionSec = () => {
           <h2>select you response</h2>
         </div>
         <div className="col-11  ">
-          <div className="col-9 d-flex question-bg ">
-            <div className="col-1 d-flex justify-content-center align-items-center">
+          <div className="col-lg-9 col-12 d-flex question-bg ">
+            <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -106,14 +92,14 @@ const QuestionSec = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-6 ">
+            <div className="col-lg-6 col-10 ">
               <h2>Strongly Agree</h2>
             </div>
           </div>
         </div>
         <div className="col-11  mt-3">
-          <div className="col-9 d-flex question-bg2 ">
-            <div className="col-1 d-flex justify-content-center align-items-center">
+          <div className="col-lg-9 col-12 d-flex question-bg2 ">
+            <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -122,14 +108,14 @@ const QuestionSec = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-6 ">
+            <div className="col-lg-6 col-10 ">
               <h2> Agree</h2>
             </div>
           </div>
         </div>
         <div className="col-11  mt-3">
-          <div className="col-9 d-flex question-bg ">
-            <div className="col-1 d-flex justify-content-center align-items-center">
+          <div className="col-lg-9 col-12 d-flex question-bg ">
+            <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -138,14 +124,14 @@ const QuestionSec = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-6 ">
+            <div className="col-lg-6 col-10 ">
               <h2>Neither Agree Not Disagree</h2>
             </div>
           </div>
         </div>
         <div className="col-11  mt-3">
-          <div className="col-9 d-flex  ">
-            <div className="col-1 d-flex justify-content-center align-items-center">
+          <div className="col-lg-9 col-12 d-flex  ">
+            <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -154,14 +140,14 @@ const QuestionSec = () => {
                 id="flexCheckChecked"
               />
             </div>
-            <div className="col-6 ">
+            <div className="col-lg-6 col-10 ">
               <h2>Disagree</h2>
             </div>
           </div>
         </div>
         <div className="col-11  mt-3">
-          <div className="col-9 d-flex question-bg ">
-            <div className="col-1 d-flex justify-content-center align-items-center">
+          <div className="col-lg-9 d-flex question-bg ">
+            <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
                 type="checkbox"
@@ -170,18 +156,18 @@ const QuestionSec = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="col-6 ">
+            <div className="col-lg-6 col-10 ">
               <h2>Strongly Disagree</h2>
             </div>
           </div>
         </div>
       </div>
       <div className="row question-sec mt-5 p-3" style={{borderRadius:'0px 0 10px 15px'}} >
-        <div className="col-1 d-flex align-items-center back-btn">
+        <div className="col-lg-1 col-md-2 col-4 d-flex align-items-center back-btn">
           <button onClick={handleNext}>Next</button>
           
         </div>
-        <div className="col-2 d-flex align-items-center">
+        <div className="col-lg-2 col-md-3 col-6 d-flex align-items-center">
           <h3>Quistion 5 of 23</h3>
         </div>
        
@@ -198,18 +184,7 @@ const QuestionSec = () => {
         <ProgressBar percentage={percentage} />
         </div> */}
       </div>
-      {/* <h2> A React Progress Bar </h2> */}
-
-      {/* <div style={{ marginTop: '20px' }}>
-        <button onClick={nextStep}>Next Step</button>
-      </div> */}
-
-      {/* <div
-        style={{ marginTop: '10px', color: 'blue', marginBottom: '15px' }}
-        onClick={backStep}
-      >
-        <button>Back</button>
-      </div> */}
+ 
     </div>
   );
 };
