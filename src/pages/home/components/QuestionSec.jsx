@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchQuestions } from "../service/HomeApi";
 
 const QuestionSec = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,21 +30,29 @@ const QuestionSec = () => {
     { id: 21, name: 'There is a correct answer to every problem in business' },
     { id: 22, name: 'You can only be successful if you know the right people' },
   ];
+  const dispatch = useDispatch();
+  const questions = useSelector((state) => state.questions);
+  // const isLoading = questions.isLoading;
+  // const error = questions.error;
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentData = data.slice(indexOfFirstItem, indexOfLastItem);
   const [percentage, setPercentage] = useState(0);
 
+  useEffect(() => {
+    dispatch(fetchQuestions());
+  }, [dispatch]);
   function handleNext() {
     setCurrentPage(currentPage + 1);
   }
   const nextStep = () => {
     if (percentage === 100) return;
-    setPercentage((prevPercentage) => prevPercentage + 20);
+    setPercentage((prevPercentage) => prevPercentage  + (100/30));
   };
   const backStep = () => {
     if (percentage === 0) return;
-    setPercentage((prevPercentage) => prevPercentage - 20);
+    setPercentage((prevPercentage) => prevPercentage - (100/30));
   };
   function handleChange(event) {
     if (event.target.checked) {
@@ -65,16 +75,22 @@ const QuestionSec = () => {
           <ProgressBar percentage={percentage} />
         </div>
       </div>
-      <div className="row ask-quistion d-flex justify-content-center mt-5">
+      {/* {isLoading && <p>Loading questions...</p>}
+      {error && <p>{error}</p>} */}
+      {currentData?.map((question) => (
+                  
+     
+        <div >
+           <div className="row ask-quistion d-flex justify-content-center mt-5">
         <div className="col-11 d-flex">
           <div className="col-1 text-center">
             <h2>5</h2>
           </div>
           <div className="col-lg-8 col-md-12 ">
             <h2>
-            {currentData.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
+           
+            <li key={question.id}>{question.name}</li>
+
             </h2>
           </div>
         </div>
@@ -162,6 +178,9 @@ const QuestionSec = () => {
           </div>
         </div>
       </div>
+          {/* <h2>{question.question_text}</h2> */}
+        </div>
+   ))}
       <div className="row question-sec mt-5 p-3" style={{borderRadius:'0px 0 10px 15px'}} >
         <div className="col-lg-1 col-md-2 col-4 d-flex align-items-center back-btn">
           <button onClick={handleNext}>Next</button>

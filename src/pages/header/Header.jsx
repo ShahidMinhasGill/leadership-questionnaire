@@ -8,8 +8,33 @@ import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from '../../assets/images/logo.png'
+import SignUpModal from '../../components/modals/SignUpModal';
+import LoginModal from '../../components/modals/LoginModal';
 function Header() {
   const [value, setValue] = useState([1, 2]);
+  const [firstName, setFirstName] = useState("");
+  // const [showLogin, setShowLogin] = useState(false);
+  // const [showSignUp, setShowSignUp] = useState(false);
+  const [state,  setState] = useState({
+    showLogin : false,
+    showSignUp : false
+  })
+  const welcomeMessage = (name) => {
+    const user = JSON.parse(localStorage.getItem("userDetail"));
+    user.first_name = user['full name'].split(" ")[0];
+    setFirstName(user?.first_name);
+    if (name === "showLogin") {
+      setState(prevState => ({
+        ...prevState,
+        showSignUp: false
+      }));
+    } else if (name === "showSignUp") {
+      setState(prevState => ({
+        ...prevState,
+        showLogin: false
+      }))}
+    }
+
   const [dropdownValue, setDropdownValue] = useState('COMMON BUSINESS PROBLEMS');
   const [dropdownValue2, setDropdownValue2] = useState('WAYS WE CAN HELP');
   const [selected, setSelected] = useState("About us");
@@ -45,17 +70,28 @@ function Header() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="navbar-nav ms-auto mobileStyle">
             <Link to="/">Your Home Page</Link>
-
-            <Link to="/login">
+             
+            <Nav >
               <div className="row">
                 <div className="col-lg-3">
                   <BsPersonCircle className='icon' style={{ height: "30px", width: "29px" }} />
                 </div>
                 <div className="col-8">
-                  Username <br /> <u className="underline">logout</u>
+                  Username <br />  
+                   {/* {firstName ? (
+                    <div className="welcomeMessage">Hi {firstName}</div>
+                  ) : ( */}
+                    <button 
+                    onClick={() =>  setState(prevState => ({
+                      ...prevState,
+                      showSignUp: true,
+                      
+                    }))}
+                    >Login</button>
+                  {/* )} */}
                 </div>
               </div>
-            </Link>
+            </Nav>
             <hr />
             <div className="Search">
               <input id="eval" type="text" />
@@ -64,6 +100,7 @@ function Header() {
           </Nav>
         </Navbar.Collapse>
         
+
       </Container>
     </Navbar>
       <hr className='divider'/>
@@ -133,8 +170,42 @@ function Header() {
       )}
         </div>
       </div>
+      {/* <LoginModal
+                    show={showLogin}
+                    onHide={() => {
+                        this.setState({showLogin: false})
+                    }}
+                    welcomeMessage={() => this.welcomeMessage("showLogin")}
+                    hideLoginShowSignUp={() => this.setState({showLogin: false, showSignUp: true})}
+                /> */}
       </Container>
-    
+              <LoginModal
+                    show={state.showLogin}
+                    onHide={() =>  setState(prevState => ({
+                              ...prevState,
+                              showLogin: false,
+                            }))}
+                    // welcomeMessage={() => this.welcomeMessage("showLogin")}
+                    welcomeMessage={() =>  setState(prevState => ({
+                      ...prevState,
+                      showLogin: state.showLogin
+                    }))}
+                    hideLoginShowSignUp={() =>  setState(prevState => ({
+                      ...prevState,
+                      showSignUp:true,
+                      showLogin: false
+                    }))}
+                          />
+                <SignUpModal
+                    show={state.showSignUp}
+                    onHide={() => setState({ ...state, showSignUp: false })}
+                    // welcomeMessage={() => welcomeMessage("showSignUp")}
+                    hideSignUpShowLogin={() =>  setState(prevState => ({
+                      ...prevState,
+                      showSignUp:false,
+                      showLogin: true
+                    }))}
+                />
     </Container>
     </div>
     </>

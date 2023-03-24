@@ -1,12 +1,13 @@
 import Header from './pages/header/Header';
 import Footer from './pages/footer/Footer';
-import Home from './pages/home/Home';
+import MainRoutes from './routes/MainRoutes';
+
 
 function App() {
   return (
  <>
  <Header />
- <Home />
+  <MainRoutes/>
  <Footer />
  </>
   );

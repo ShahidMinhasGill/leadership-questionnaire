@@ -1,36 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchQuestions } from './HomeApi';
 
+const questionsSlice = createSlice({
+  name: 'questions',
+  initialState: {
+    questions: [],
+    isLoading: false,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchQuestions.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchQuestions.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.questions = action.payload;
+        state.error = null;
+      })
+      .addCase(fetchQuestions.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      });
+  },
+});
 
-//slice to manage Question section
-const createHomeSlice = createSlice({
-    name: "createHomeSection",
-    initialState: {
-        getQuestionList: [],
-
-    },
-    reducers: { },
-    extraReducers: {
-
-
-        ['createHomeSection/getQuestionList/fulfilled']: (state, action) => {
-            const { data, status } = action.payload || {}
-
-            if (status >= 200 && status < 300) {
-                state.getQuestionList = data
-            } else if (status >= 400 && status < 500) {
-                toast("Something went wrong in getQuestionList")
-            }
-        },
-
-
-
-
-    }
-})
-
-export const { SetAddedVenuesData, RemoveAddedVenuesData,
-    SetAddedVenueDetailsData, RemoveAddedVenueDetailsData,
-    ClearAddedVenuesData, ClearAddedVenuesDetailData,ChangeCurrentLocationlanlng } = createHomeSlice.actions;
-
-export default createHomeSlice.reducer;
+// Export the questions reducer
+export default questionsSlice.reducer;

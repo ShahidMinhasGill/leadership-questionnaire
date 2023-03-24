@@ -4,6 +4,9 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 
+import authReducer from '../components/modals/service/registerSlice'
+import homeReducer from '../pages/home/service/HomeSlice'
+import questionsReducer from '../pages/home/service/HomeSlice'
 // import AuthSlice from "./shared/shredSlice";
 // import createEventSlice from '../pages/front-end/create-event/service/CreateEventSlice'
 // import blogSlice from "../pages/front-end/blog/service/BlogSlice";
@@ -11,6 +14,9 @@ import thunk from "redux-thunk";
 // import googleSlice from "./GoogleSlice";
 
 const reducers = combineReducers({
+  authReducer,
+  homeReducer,
+  questionsReducer
   // AuthSlice,
 //   createEventSlice,
 //   blogSlice,

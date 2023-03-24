@@ -8,7 +8,7 @@ export const apiInstance = axios.create({
   // timeout: 10000,
   headers: {
     Accept: "application/json",
-    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjcwOTEzNzYwLCJleHAiOjE2NzM1MDU3NjB9.D0kJm8v16JDIz4_176FSy8_ZwVD6CyrTik-nnPTMxFw"
+    // Authorization: "Bearer 306ca9302ba7fbe8c441235cfd885375b121388dc65de6ec76155b4d39b4cd53"
     // "Content-Type": "multipart/form-data",
   },
 });

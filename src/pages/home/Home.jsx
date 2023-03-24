@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import QuestionSec from "./components/QuestionSec";
+// import { GetQuestionList } from "./service/createHomeApi";
 
 export default function Home() {
+
   return (
     <div className=" home">
       <div className="container">
