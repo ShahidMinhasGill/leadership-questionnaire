@@ -53,6 +53,7 @@ const fetchQuestionsformat = async () => {
     );
     console.log('formattedQuestions', formattedQuestions);
     setQuestions(formattedQuestions);
+    
     console.log('questions', questions);
     setLoading(false);
   } catch (error) {
@@ -61,12 +62,15 @@ const fetchQuestionsformat = async () => {
 };
 
 useEffect(() => {
+  // console.log('fetchQuestions',fetchQuestions);
   dispatch(fetchQuestions());
 }, []);
 
 useEffect(() => {
   fetchQuestionsformat();
-}, []);
+  console.log('fetchQuestionsformat');
+
+}, [getQuestions]);
 
 if (loading) {
   return <div>Loading...</div>;
