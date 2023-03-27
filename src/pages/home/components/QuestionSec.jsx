@@ -29,35 +29,56 @@ const QuestionSec = () => {
     question: 0,
     correctAnswers :0
   })
+  const [result, setResult] = useState({
+    score: 0,
+    correctAnswers: 0,
+    wrongAnswers: 0,
+  })
 
   const getQuestions = useSelector((state) => state.homeReducer.questions);
 const [activeQuestion, setActiveQuestion] = useState(0);
 const [questions, setQuestions] = useState([]);
+const [loading, setLoading] = useState(true);
 
-const fetchQuestions = async () => {
+const fetchQuestionsformat = async () => {
   try {
-    const formattedQuestions = getQuestions.map((question) => ({
-      question: question.question_text,
-      questionId: question.id,
-      choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-      type: 'MCQs',
-      correctAnswer: question.answer,
-    }));
+    const formattedQuestions = await Promise.all(
+      getQuestions.map(async (question) => ({
+        question: question.question_text,
+        questionId: question.id,
+        choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
+        type: 'MCQs',
+        correctAnswer: question.answer,
+      }))
+    );
+    console.log('formattedQuestions', formattedQuestions);
     setQuestions(formattedQuestions);
+    console.log('questions', questions);
+    setLoading(false);
   } catch (error) {
     console.error(error);
   }
 };
 
 useEffect(() => {
-  fetchQuestions();
+  dispatch(fetchQuestions());
 }, []);
 
-const question = questions[activeQuestion]?.question;
-const questionId = questions[activeQuestion]?.questionId;
-const choices = questions[activeQuestion]?.choices;
+useEffect(() => {
+  fetchQuestionsformat();
+}, []);
 
+if (loading) {
+  return <div>Loading...</div>;
+}
+
+const question = questions[activeQuestion]?.question;
+const choices = questions[activeQuestion]?.choices;
+const questionId = questions[activeQuestion]?.questionId;
 console.log('questionId', questionId);
+
+
+
 
   
 
@@ -114,11 +135,7 @@ console.log('questionId', questionId);
  
 
   }
-  const [result, setResult] = useState({
-    score: 0,
-    correctAnswers: 0,
-    wrongAnswers: 0,
-  })
+
 
   // const { questions } = quiz
 
