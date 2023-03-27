@@ -11,7 +11,7 @@ import { BsTools } from 'react-icons/bs';
 
 
 const QuestionSec = () => {
-  // const [activeQuestion, setActiveQuestion] = useState(0)
+  const [activeQuestion, setActiveQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState('')
   const [showResult, setShowResult] = useState(false)
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null)
@@ -19,47 +19,24 @@ const QuestionSec = () => {
   const [checked, setChecked] = useState('');
   const dispatch = useDispatch();
 
+  const fetchquestions = useSelector((state) => state.homeReducer.questions);
   const curruntUser = useSelector((state) => state.homeReducer.data);
   const userprogress = useSelector((state) => state);
   // localStorage.setItem('userId',curruntUser);
-  
-  
-  const [sentRespons, setSentRespons] = useState({
+
+
+   const [sentRespons, setSentRespons] = useState({
     // userId: curruntUser.id,
     question: 0,
     correctAnswers :0
   })
-
-  const getQuestions = useSelector((state) => state.homeReducer.questions);
-const [activeQuestion, setActiveQuestion] = useState(0);
-const [questions, setQuestions] = useState([]);
-
-const fetchQuestions = async () => {
-  try {
-    const formattedQuestions = getQuestions.map((question) => ({
-      question: question.question_text,
-      questionId: question.id,
-      choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-      type: 'MCQs',
-      correctAnswer: question.answer,
-    }));
-    setQuestions(formattedQuestions);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-useEffect(() => {
-  fetchQuestions();
-}, []);
-
-const question = questions[activeQuestion]?.question;
-const questionId = questions[activeQuestion]?.questionId;
-const choices = questions[activeQuestion]?.choices;
-
-console.log('questionId', questionId);
-
+  useEffect(() => {
+    dispatch(fetchQuestions());
+    dispatch(fetchUser());
+    dispatch(fetchUserProgress())
+  }, [dispatch]);
   
+
 
   // const quiz = {
   //   topic: 'Javascript',
@@ -70,7 +47,19 @@ console.log('questionId', questionId);
   //   questions: [],
   // };
 
- 
+  let questions = [];
+
+  fetchquestions.map((question) => {
+    questions.push({
+      question: question.question_text,
+      questionId: question.id,
+      choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
+      type: 'MCQs',
+      correctAnswer: question.answer,
+    });
+  });
+  console.log('questions420',questions);
+
   // const quiz = {
   //   topic: 'Javascript',
   //   level: 'Beginner',
@@ -123,7 +112,8 @@ console.log('questionId', questionId);
   // const { questions } = quiz
 
   
- 
+  const { question,questionId, choices, correctAnswer } = questions[activeQuestion]
+  console.log('questionId',questions[activeQuestion]);
   const nextStep = () => {
     if (percentage === 100) return;
     setPercentage((prevPercentage) => prevPercentage  + (100/25));
@@ -231,7 +221,7 @@ console.log('questionId', questionId);
         </div>
         <div className="col-11 mt-3 ">
         {choices?.map((answer, index) => (
-          <div className={`col-lg-4 col-12 d-flex ${index % 2 !== 1 ? 'question-bg' : 'question-bg2'}`}>
+          <div className={`col-lg-4 col-12 d-flex ${index % 2 !== 1 ? 'question-bg' : ''}`}>
             <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"

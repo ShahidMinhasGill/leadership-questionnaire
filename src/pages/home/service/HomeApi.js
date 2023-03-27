@@ -5,7 +5,9 @@ import axios from 'axios';
 export const fetchQuestions = createAsyncThunk(
   'questions/fetchQuestions',
   async () => {
+  
     const response = await axios.get('https://walrus-app-xqntt.ondigitalocean.app/question_api/');
+    console.log('response',response);
     return response.data;
   }
 );
@@ -32,7 +34,7 @@ export const postResponse = createAsyncThunk(
 export const fetchUserProgress = createAsyncThunk(
   "userProgress/fetchUserProgress",
   async (id) => {
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
     // console.log('tokentoken',id);
     // try {
     //   const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_progress_api/${id}/`, {
