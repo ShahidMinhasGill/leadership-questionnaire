@@ -3,7 +3,9 @@
 
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchQuestions } from "../service/HomeApi"
+import { register } from "../../../components/modals/service/registerApi"
+import { fetchQuestions, fetchUser, fetchUserProgress, postResponse } from "../service/HomeApi"
+import { BsTools } from 'react-icons/bs';
 
 
 
@@ -17,27 +19,46 @@ const QuestionSec = () => {
   const [checked, setChecked] = useState('');
   const dispatch = useDispatch();
 
+  const fetchquestions = useSelector((state) => state.homeReducer.questions);
+  const curruntUser = useSelector((state) => state.homeReducer.data);
+  const userprogress = useSelector((state) => state);
+  // localStorage.setItem('userId',curruntUser);
+
+
+   const [sentRespons, setSentRespons] = useState({
+    // userId: curruntUser.id,
+    question: 0,
+    correctAnswers :0
+  })
   useEffect(() => {
     dispatch(fetchQuestions());
+    dispatch(fetchUser());
+    dispatch(fetchUserProgress())
   }, [dispatch]);
-  const fetchquestions = useSelector((state) => state.homeReducer.questions);
+  
 
-  const quiz = {
-    topic: 'Javascript',
-    level: 'Beginner',
-    totalQuestions: 10,
-    perQuestionScore: 5,
-    // totalTime: 60, // in seconds
-    questions: [],
-  };
+
+  // const quiz = {
+  //   topic: 'Javascript',
+  //   level: 'Beginner',
+  //   totalQuestions: 10,
+  //   perQuestionScore: 5,
+  //   // totalTime: 60, // in seconds
+  //   questions: [],
+  // };
+
+  let questions = [];
+
   fetchquestions.map((question) => {
-    quiz.questions.push({
+    questions.push({
       question: question.question_text,
+      questionId: question.id,
       choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
       type: 'MCQs',
       correctAnswer: question.answer,
     });
   });
+  console.log('questions420',questions);
 
   // const quiz = {
   //   topic: 'Javascript',
@@ -78,8 +99,9 @@ const QuestionSec = () => {
   // }
   function handleCheckboxChange(event) {
     const { name } = event.target;
-    
     setChecked(name === checked ? '' : name);
+ 
+
   }
   const [result, setResult] = useState({
     score: 0,
@@ -87,16 +109,21 @@ const QuestionSec = () => {
     wrongAnswers: 0,
   })
 
-  const { questions } = quiz
-  console.log('questions',questions);
-  const { question, choices, correctAnswer } = questions[activeQuestion]
+  // const { questions } = quiz
+
+  
+  const { question,questionId, choices, correctAnswer } = questions[activeQuestion]
+  console.log('questionId',questions[activeQuestion]);
   const nextStep = () => {
     if (percentage === 100) return;
     setPercentage((prevPercentage) => prevPercentage  + (100/25));
   };
-  const onClickNext = () => {
+
+  const onClickNext = () => { 
+    dispatch(postResponse(sentRespons));
     setSelectedAnswerIndex(null)
     setChecked(null)
+ 
     setResult((prev) =>
       selectedAnswer
         ? {
@@ -117,21 +144,39 @@ const QuestionSec = () => {
   }
 
   const onAnswerSelected = (answer, index) => {
-    
+    setSentRespons(prevState => ({
+      ...prevState,
+      // userId: curruntUser.id,
+      correctAnswers: answer,
+      question: questionId,
+    }))
     console.log(answer);
-    setSelectedAnswerIndex(index)
-    if (answer === correctAnswer) {
-      setSelectedAnswer(true)
-    } else {
-      setSelectedAnswer(false)
-    }
+    setSelectedAnswerIndex(answer)
+    // if (answer === correctAnswer) {
+    //   setSelectedAnswer(true)
+    // } else {
+    //   setSelectedAnswer(false)
+    // }
   }
 
   const addLeadingZero = (number) => (number > 9 ? number : `0${number}`)
 
   return (
     <div className="quiz-container" >
-           <div className="row question-sec p-2" style={{borderRadius:'10px 10px 0px 0px'}}>
+      <div className="row toop-sec">
+
+       <div className="col-8 d-flex align-items-center ">
+          <button >Back to Home page</button>
+        </div>
+             <div className="col-lg-8 col-md-12 ">
+              <h3><BsTools className="tool-icon"/>Leadership questionnaire</h3>
+          </div>
+             <div className="col-lg-10 col-md-12 ">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec porttitor massa. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam rhoncus vel massa et viverra. Praesent et lobortis metus, nec tempus purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
+</p>
+          </div>
+      </div>
+           <div className="row question-sec p-3" style={{borderRadius:'10px 10px 0px 0px'}}>
         <div className="col-3 d-flex align-items-center back-btn">
           <button >Back</button>
         </div>
@@ -149,6 +194,8 @@ const QuestionSec = () => {
            <div className="row ask-quistion d-flex justify-content-center mt-5">
             {!showResult ? (
         <div>
+        
+          <div className="col-11 d-flex">
           <div>
             <span className="active-question-no">
               {addLeadingZero(activeQuestion + 1)}
@@ -157,13 +204,14 @@ const QuestionSec = () => {
               /{addLeadingZero(questions.length)}
             </span>
           </div>
-          <div className="col-11 d-flex">
-          <div className="col-1 text-center">
+          {/* <div className="col-1 text-center">
             <h2>{addLeadingZero(activeQuestion + 1)}</h2>
-          </div>
-          <div className="col-lg-8 col-md-12 ">
+          </div> */}
+          <div className="col-lg-9 col-md-12 mt-3 ">
             <h2>
-            <li >{question}</li>
+            {/* {question} */}
+                        <li >{question}</li>
+            {/* <li >{questionId}</li> */}
             
             </h2>
           </div>
@@ -171,13 +219,13 @@ const QuestionSec = () => {
             <div className="col-11 mt-4">
           <h2>select you response</h2>
         </div>
-        <div className="col-11  ">
-        {choices.map((answer, index) => (
-          <div className="col-lg-9 col-12 d-flex question-bg ">
+        <div className="col-11 mt-3 ">
+        {choices?.map((answer, index) => (
+          <div className={`col-lg-4 col-12 d-flex ${index % 2 !== 1 ? 'question-bg' : 'question-bg2'}`}>
             <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
-                type="checkbox"
+                type="radio"
                 name={answer}
                 checked={checked === answer}
                 onChange={handleCheckboxChange}

@@ -1,29 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchQuestions } from './HomeApi';
+import { fetchQuestions, fetchUser, fetchUserProgress, postResponse } from './HomeApi';
 
 const questionsSlice = createSlice({
   name: 'questions',
-  initialState: {
+   initialState: {
     questions: [],
-    isLoading: false,
-    error: null,
+    data: null,
+    status: null,
+    error: null, 
+    userProgress: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchQuestions.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
       .addCase(fetchQuestions.fulfilled, (state, action) => {
-        state.isLoading = false;
         state.questions = action.payload;
-        state.error = null;
         console.log('actionpayload',state);
       })
-      .addCase(fetchQuestions.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message;
+      .addCase(postResponse.fulfilled, (state, action) => {
+        state.data = action.payload;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.data = action.payload;
+      })
+
+      .addCase(fetchUserProgress.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchUserProgress.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userProgress = action.payload;
+      })
+      .addCase(fetchUserProgress.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });

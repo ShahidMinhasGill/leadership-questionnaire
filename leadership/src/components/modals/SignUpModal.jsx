@@ -179,4 +179,4 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     );
 };
 
-export default SignUpModal;
+    export default SignUpModal;
