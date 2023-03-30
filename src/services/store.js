@@ -4,7 +4,8 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import thunk from "redux-thunk";
 
-import authReducer from '../components/modals/service/registerSlice'
+import authReducer from '../components/modals/service/authSlice'
+// import loginReducer from '../components/modals/service/loginSlice'
 import homeReducer from '../pages/home/service/HomeSlice'
 import questionsReducer from '../pages/home/service/HomeSlice'
 // import AuthSlice from "./shared/shredSlice";
@@ -16,7 +17,8 @@ import questionsReducer from '../pages/home/service/HomeSlice'
 const reducers = combineReducers({
   authReducer,
   homeReducer,
-  questionsReducer
+  questionsReducer,
+  // loginReducer
   // AuthSlice,
 //   createEventSlice,
 //   blogSlice,
@@ -28,7 +30,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  //   whitelist: ["AuthSlice"],
+    whitelist: ["authReducer"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

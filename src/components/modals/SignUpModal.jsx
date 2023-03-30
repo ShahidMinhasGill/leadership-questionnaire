@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import {Row, Col, Modal, Spinner, Form} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
-import { register } from "./service/registerApi";
-import registerSlice from './service/registerSlice'
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { registerUser } from "./service/authApi";
 
 const initialValues = {
     username: "",
@@ -41,9 +40,9 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
         email: values.email,
         password: values.password,
       };
-      dispatch(register(userData));
+      dispatch(registerUser(userData));
       toast.success("you are succesfully Registerd");
-      navigate(hideSignUpShowLogin)
+    //   navigate(hideSignUpShowLogin)
     //   if (isLoading === 'loading') {
     //     return <div>Loading...</div>;
     //   }

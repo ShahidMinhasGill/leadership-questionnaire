@@ -7,10 +7,11 @@
   .Search {
     align-items: center;
     display: flex;
-    height: 40px;
+    height: 36px;
+    opacity: 1;
     input {
       border: 1px solid #ec008c;
-      border-radius: 10px 0 0 10px;
+      border-radius: 5px 0 0 5px;
       font-family: Poppins, Arial, Helvetica, sans-serif;
       font-size: 16px;
       font-style: normal;
@@ -25,7 +26,7 @@
     button {
       background: #ec008c;
       border: none;
-      border-radius: 0 10px 10px 0;
+      border-radius: 0 5px 5px 0;
       color: #fff;
       font-family: Poppins;
       font-size: 18px;
@@ -39,7 +40,7 @@
     }
   }
   .logo {
-    margin-bottom: 2rem;
+    margin-bottom: 0.8rem;
     img {
       height: 47px;
       width: 150;

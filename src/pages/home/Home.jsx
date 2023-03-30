@@ -23,8 +23,11 @@ export default function Home() {
           </div>
           </div>
         </div> */}
-        <div className="col-12 mt-5" >
+        <div className="row d-flex justify-content-center">
+
+        <div className="col-10 mt-5" >
         <QuestionSec />
+        </div>
         </div>
       </div>
       {/* <div className="container-fluid">

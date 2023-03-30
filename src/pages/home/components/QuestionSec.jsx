@@ -1,40 +1,64 @@
 // Question Types
 // 1. MCQs | Multiple Choice | single
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { register } from "../../../components/modals/service/registerApi"
-import { fetchQuestions, fetchUser, fetchUserProgress, postResponse } from "../service/HomeApi"
+import { fetchQuestions, fetchUserProgress, postResponse } from "../service/HomeApi"
 import { BsTools } from 'react-icons/bs';
-
-
-
-
+import { toast } from "react-toastify";
+import { fetchUser } from "../../../components/modals/service/loginApi";
 const QuestionSec = () => {
   // const [activeQuestion, setActiveQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState('')
   const [showResult, setShowResult] = useState(false)
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null)
-  const [percentage, setPercentage] = useState(0);
+  // const [percentage, setPercentage] = useState(0);
   const [checked, setChecked] = useState('');
   const dispatch = useDispatch();
+  const mainColRef = useRef(null);
+  // var item_value = sessionStorage.getItem("user");
+  const getUser = sessionStorage.getItem('user');
+  const token = sessionStorage.getItem('token');
+  const user = JSON.parse(getUser);
+  // let userId = 1
+  // if (token) {
+  //    userId =  user?.id
+  // }
+ console.log('userId',token);
 
-  const curruntUser = useSelector((state) => state.homeReducer.data);
-  const userprogress = useSelector((state) => state);
-  // localStorage.setItem('userId',curruntUser);
-  
-  
+// const item_value = JSON.parse(sessionStorage.getItem(userId));
+  // const formattedId = {"id": item_value.id};
+  // console.log('formattedId',user.id);
+
   const [sentRespons, setSentRespons] = useState({
-    // userId: curruntUser.id,
+    user_id: 0,
     question: 0,
-    correctAnswers :0
+    answer :''
   })
   const [result, setResult] = useState({
-    score: 0,
-    correctAnswers: 0,
-    wrongAnswers: 0,
+    completed_percentage: 0,
+    completed_question: 0,
+    question_left: 0,
+    last_completed_question: 0,
   })
+  const curruntUser = useSelector((state) => state.homeReducer.user);
+  const [userId, setUserId] = useState(curruntUser?.id);
 
+  console.log('curruntUser',curruntUser?.id);
+  const progressResponse = useSelector((state) => state.homeReducer.userProgress);
+  useEffect(() => {
+    if (progressResponse && progressResponse.length > 0) {
+      const data = progressResponse[0];
+      setResult({
+        completed_percentage: data.completed_percentage,
+        completed_question: data.completed_question,
+        question_left: data.question_left,
+        last_completed_question: data.last_completed_question,
+      });
+    }
+  }, [progressResponse]);
+  
+  console.log('result', result);
   const getQuestions = useSelector((state) => state.homeReducer.questions);
 const [activeQuestion, setActiveQuestion] = useState(0);
 const [questions, setQuestions] = useState([]);
@@ -47,30 +71,63 @@ const fetchQuestionsformat = async () => {
         question: question.question_text,
         questionId: question.id,
         choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-        type: 'MCQs',
-        correctAnswer: question.answer,
+        // choices: ['-2', '-1', '0', '1', '2'],
+        // type: 'MCQs',
+        // answer: question.answer,
       }))
     );
-    console.log('formattedQuestions', formattedQuestions);
     setQuestions(formattedQuestions);
     
-    console.log('questions', questions);
     setLoading(false);
   } catch (error) {
     console.error(error);
   }
 };
-
+//  const token = localStorage.getItem('token')
+//  console.log('token',token.user_id);
+useEffect(() => {
+  if (curruntUser) {
+    setUserId(curruntUser.id);
+  }
+}, [curruntUser]);
 useEffect(() => {
   // console.log('fetchQuestions',fetchQuestions);
   dispatch(fetchQuestions());
+  // dispatch(fetchUser());
 }, []);
+useEffect(() => {
+  dispatch(fetchUser());
+}, [token]);
 
 useEffect(() => {
   fetchQuestionsformat();
-  console.log('fetchQuestionsformat');
-
 }, [getQuestions]);
+useEffect(() => {
+  setResult((prev) => ({
+    ...prev,
+    // completed_percentage: prev.completed_percentage + (100/25),
+    completed_question: activeQuestion +1,
+    // question_left: question.length - activeQuestion,
+  }))
+  // console.log('question_left',result.question_left);
+}, [activeQuestion]);
+
+useEffect(() => {
+  // Get the progress bar state from localStorage
+  const storedState = localStorage.getItem('progressBarState');
+  console.log('storedState', storedState);
+  if (storedState) {
+    setResult(JSON.parse(storedState));
+  }
+}, []);
+
+useEffect(() => {
+  // Update localStorage whenever the progress bar state is updated
+  localStorage.setItem('progressBarState', JSON.stringify(result));
+  console.log('updatedState', result);
+}, [result]);
+
+
 
 if (loading) {
   return <div>Loading...</div>;
@@ -79,13 +136,8 @@ if (loading) {
 const question = questions[activeQuestion]?.question;
 const choices = questions[activeQuestion]?.choices;
 const questionId = questions[activeQuestion]?.questionId;
-console.log('questionId', questionId);
-
-
-
-
-  
-
+// const user_id = curruntUser?.id;
+// console.log('user_id', user_id);
   // const quiz = {
   //   topic: 'Javascript',
   //   level: 'Beginner',
@@ -136,51 +188,87 @@ console.log('questionId', questionId);
   function handleCheckboxChange(event) {
     const { name } = event.target;
     setChecked(name === checked ? '' : name);
- 
-
   }
-
-
-  // const { questions } = quiz
-
-  
- 
   const nextStep = () => {
-    if (percentage === 100) return;
-    setPercentage((prevPercentage) => prevPercentage  + (100/25));
+    if (result.completed_percentage >= 100) return;
+      setResult((prev) => ({
+        ...prev,
+        completed_percentage: prev.completed_percentage + (100 / 24),
+      }));
+      console.log('completed_question', result.completed_percentage);
   };
-
-  const onClickNext = () => { 
-    dispatch(postResponse(sentRespons));
-    setSelectedAnswerIndex(null)
-    setChecked(null)
  
-    setResult((prev) =>
-      selectedAnswer
-        ? {
-            ...prev,
-            score: prev.score + 5,
-            correctAnswers: prev.correctAnswers + 1,
-            
-          }
-        : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
-    )
-    if (activeQuestion !== questions.length - 1) {
-      setActiveQuestion((prev) => prev + 1)
-      nextStep()
-    } else {
-      setActiveQuestion(0)
-      setShowResult(true)
+  const handleBack = ()=>{
+    if (result.completed_percentage >= 100) return;
+    setResult((prev) => ({
+      ...prev,
+      completed_percentage: prev.completed_percentage - (100 / 24),
+    }));
+    console.log('completed_question', result.completed_percentage);
+    setActiveQuestion((prev) => prev - 1)
+  }
+  const onClickNext = () => { 
+    if (!token) {
+      // User ID not found, show error message
+      toast.error('Please Login first');
+    } else{
+      dispatch(postResponse(sentRespons));
+      setSelectedAnswerIndex(null)
+      setChecked(null) 
+      console.log('question_left',result.question_left);
+      setResult((prev) =>
+        selectedAnswer
+          ? {
+              ...prev,
+              score: prev.score + 5,
+              correctAnswers: prev.correctAnswers + 1,
+              
+            }
+          : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
+      )
+      if (activeQuestion !== questions.length - 1) {
+        setActiveQuestion((prev) => prev + 1)
+        nextStep()
+      } else {
+        nextStep()
+        setActiveQuestion(0)
+        dispatch(fetchUserProgress(userId))
+        setShowResult(true)
+      }
     }
   }
 
   const onAnswerSelected = (answer, index) => {
+    const radioButtons = mainColRef.current.querySelectorAll('input[type="radio"]');
+    console.log('radioButtons',radioButtons);
+    radioButtons.forEach(radioButton => {
+      radioButton.checked = true;
+      console.log('radioButtons',radioButton);
+    });
+    // handleCheckboxChange(radioButtons); // Call the onChange handler to update state
+    setResult((prev) => ({
+      ...prev,
+      question_left: questions.length - activeQuestion - 1,
+    }))
+    if (answer === 'Strongly Agree') {
+      answer = -2;
+    }else if (answer === 'Agree') {
+      answer = -1;
+    }else if (answer === 'Neutral') {
+      answer = 0;
+    }else if (answer === 'Disagree') {
+      answer = 1;
+    }else if (answer === 'Strongly Disagree') {
+      answer = 2;
+    }
     setSentRespons(prevState => ({
       ...prevState,
-      // userId: curruntUser.id,
-      correctAnswers: answer,
+      user_id :userId,
+      answer: answer,
       question: questionId,
     }))
+    
+    console.log('completed_question',result.completed_question);
     console.log(answer);
     setSelectedAnswerIndex(answer)
     // if (answer === correctAnswer) {
@@ -197,36 +285,48 @@ console.log('questionId', questionId);
       <div className="row toop-sec">
 
        <div className="col-8 d-flex align-items-center ">
-          <button >Back to Home page</button>
+          <button >Back to Homepage</button>
         </div>
              <div className="col-lg-8 col-md-12 ">
-              <h3><BsTools className="tool-icon"/>Leadership questionnaire</h3>
+              <h3><BsTools className="tool-icon"/>The Leadership Compass</h3>
           </div>
              <div className="col-lg-10 col-md-12 ">
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec porttitor massa. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam rhoncus vel massa et viverra. Praesent et lobortis metus, nec tempus purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
-</p>
+             </p>
           </div>
       </div>
            <div className="row question-sec p-3" style={{borderRadius:'10px 10px 0px 0px'}}>
         <div className="col-3 d-flex align-items-center back-btn">
-          <button >Back</button>
+          <button onClick={handleBack}
+          disabled={(activeQuestion === 0)}
+          >
+          {/* <button 
+           onClick={onClickNext}
+           disabled={selectedAnswerIndex === null}
+          >
+          {activeQuestion === 1  ? disabled : enabled}
+          </button> */}
+            Back</button>
         </div>
         <div className="col-8">
           <div className="col-7">
            
-            <h3>Quistion 5   <span className="total-question">
+            <h3>Question <span className="active-question-no " style={{marginLeft:'5px'}}>
+              {(activeQuestion + 1)}
+            </span>   
+            <span className="total-question">
               /{addLeadingZero(questions.length)}
             </span></h3>
           </div>
-          <ProgressBar percentage={percentage} />
+          <ProgressBar percentage={result.completed_percentage} />
         </div>
       </div>
       <div >
            <div className="row ask-quistion d-flex justify-content-center mt-5">
             {!showResult ? (
-        <div>
+        <div >
         
-          <div className="col-11 d-flex">
+          <div className="col-11 d-flex mx-auto">
           <div>
             <span className="active-question-no">
               {addLeadingZero(activeQuestion + 1)}
@@ -238,21 +338,20 @@ console.log('questionId', questionId);
           {/* <div className="col-1 text-center">
             <h2>{addLeadingZero(activeQuestion + 1)}</h2>
           </div> */}
-          <div className="col-lg-9 col-md-12 mt-3 ">
+          <div className="col-lg-11 col-md-12 mt-3 m-3 ">
             <h2>
-            {/* {question} */}
-                        <li >{question}</li>
+            {question}
             {/* <li >{questionId}</li> */}
             
             </h2>
           </div>
         </div>
-            <div className="col-11 mt-4">
-          <h2>select you response</h2>
+            <div className="col-9 mt-4 m-3 mx-auto">
+          <h2>Select your response</h2>
         </div>
-        <div className="col-11 mt-3 ">
+        <div className="col-10 mt-3 mx-auto">
         {choices?.map((answer, index) => (
-          <div className={`col-lg-4 col-12 d-flex ${index % 2 !== 1 ? 'question-bg' : 'question-bg2'}`}>
+          <div  onClick={() => onAnswerSelected(answer, index)} className={`col-lg-6 col-12 d-flex ${index % 2 !== 1 ? 'question-bg' : 'question-bg2'}`} ref={mainColRef}>
             <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
@@ -260,7 +359,7 @@ console.log('questionId', questionId);
                 name={answer}
                 checked={checked === answer}
                 onChange={handleCheckboxChange}
-                onClick={() => onAnswerSelected(answer, index)}
+               
                 id={`flexCheckChecked${index}`}
               />
               {/* <h2>{index}</h2> */}
@@ -296,8 +395,11 @@ console.log('questionId', questionId);
           
         </div>
         <div className="col-lg-2 col-md-3 col-6 d-flex align-items-center">
-        <h3>Quistion 5   <span>
-              /{questions.length}
+        <h3>Question <span className="active-question-no" style={{marginLeft:'15px',fontSize:'24px'}}>
+              {(activeQuestion + 1)}
+            </span>   
+            <span className="total-question" style={{marginTop:'10px'}}>
+              /{addLeadingZero(questions.length)}
             </span></h3>
         </div>
       </div>
@@ -317,13 +419,16 @@ console.log('questionId', questionId);
             Total Question: <span>{questions.length}</span>
           </p>
           <p>
-            Total Score:<span> {result.score}</span>
+          Completed Percentage:<span> {progressResponse.completed_percentage}</span>
           </p>
           <p>
-            Correct Answers:<span> {result.correctAnswers}</span>
+          Completed Question:<span> {progressResponse.completed_question}</span>
           </p>
           <p>
-            Wrong Answers:<span> {result.wrongAnswers}</span>
+          Question left:<span> {progressResponse.question_left}</span>
+          </p>
+          <p>
+          Last Completed Question:<span> {progressResponse.last_completed_question}</span>
           </p>
         </div>
       )}

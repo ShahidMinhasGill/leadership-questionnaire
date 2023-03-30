@@ -3,7 +3,6 @@
 
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { register } from "../../../components/modals/service/registerApi"
 import { fetchQuestions, fetchUser, fetchUserProgress, postResponse } from "../service/HomeApi"
 import { BsTools } from 'react-icons/bs';
 

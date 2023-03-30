@@ -38,6 +38,7 @@ function Header() {
   const [dropdownValue, setDropdownValue] = useState('COMMON BUSINESS PROBLEMS');
   const [dropdownValue2, setDropdownValue2] = useState('WAYS WE CAN HELP');
   const [selected, setSelected] = useState("About us");
+  // const [joinus, setJoinus] = useState("Join us");
   const commonBusiness = ["COMMON BUSINESS PROBLEMS", "COMMON BUSINESS PROBLEMS1", "COMMON BUSINESS PROBLEMS2", "COMMON BUSINESS PROBLEMS3"];
   const languages = ["About us", "German", "Russian", "Chinese", "Japanese", "Urdu", "Hindi"];
   const wayshelp = ["WAYS WE CAN HELP", "WAYS WE CAN HELP2", "WAYS WE CAN HELP3", "WAYS WE CAN HELP4"];
@@ -48,6 +49,7 @@ function Header() {
     setSelected(event.target.value);
     setDropdownValue(event.target.value);
     setDropdownValue2(event.target.value);
+    // setJoinus(event.target.value);
   }
   const handleDropdownChange = (e) => {
     setDropdownValue(e.target.value);
@@ -68,33 +70,22 @@ function Header() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <BsPersonCircle className="profile-icon" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="navbar-nav ms-auto mobileStyle">
+          <Nav className="navbar-nav ms-auto mobileStyle d-flex align-items-center">
+            <Link to="/">Mentoring & board</Link>
             <Link to="/">Your Home Page</Link>
-             
-            <Nav >
-              <div className="row">
-                <div className="col-lg-3">
-                  <BsPersonCircle className='icon' style={{ height: "30px", width: "29px" }} />
-                </div>
-                <div className="col-8">
-                  Username <br />  
-                   {/* {firstName ? (
-                    <div className="welcomeMessage">Hi {firstName}</div>
-                  ) : ( */}
-                    <button 
-                    onClick={() =>  setState(prevState => ({
+            <Link to="/">stauart.saywell1@bethbusiness.com</Link>
+            <Link to="#"   onClick={() =>  setState(prevState => ({
                       ...prevState,
                       showSignUp: true,
                       
-                    }))}
-                    >Login</button>
-                  {/* )} */}
-                </div>
-              </div>
-            </Nav>
+                    }))}>
+              Login
+            </Link>
+             
+
             <hr />
             <div className="Search">
-              <input id="eval" type="text" />
+              <input id="eval" type="text" placeholder='Search topicsand questions...'/>
               <button>Search</button>
             </div>
           </Nav>
@@ -168,6 +159,15 @@ function Header() {
         {/* <button onClick={() => setShowLogin(true)}>Login</button> */}
       </Nav>
       )}
+        {/* {value.includes(2) && (
+        <Nav className="ms-auto dir">
+        <select className="select" defaultValue={joinus} onChange={handleChange}>
+          {languages.map((language, index) => (
+            <option key={index} value={language}>{language}</option>
+          ))}
+        </select>
+      </Nav>
+      )} */}
         </div>
       </div>
       {/* <LoginModal

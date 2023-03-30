@@ -5,10 +5,10 @@ const questionsSlice = createSlice({
   name: 'questions',
    initialState: {
     questions: [],
+    userProgress: [],
     data: null,
     status: null,
     error: null, 
-    userProgress: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -20,21 +20,19 @@ const questionsSlice = createSlice({
       .addCase(postResponse.fulfilled, (state, action) => {
         state.data = action.payload;
       })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.data = action.payload;
-      })
+   
 
       .addCase(fetchUserProgress.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchUserProgress.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = 'succeeded';
         state.userProgress = action.payload;
       })
-      .addCase(fetchUserProgress.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      });
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        console.log('state.user',state.user);
+      })
   },
 });
 
