@@ -3,10 +3,10 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchQuestions, fetchUserProgress, postResponse } from "../service/HomeApi"
+import { fetchUser,fetchQuestions, fetchUserProgress, fetchUserResult, postResponse } from "../service/HomeApi"
 import { BsTools } from 'react-icons/bs';
 import { toast } from "react-toastify";
-import { fetchUser } from "../../../components/modals/service/loginApi";
+// import { fetchUser } from "../../../components/modals/service/authApi";
 const QuestionSec = () => {
   // const [activeQuestion, setActiveQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState('')
@@ -29,11 +29,14 @@ const QuestionSec = () => {
 // const item_value = JSON.parse(sessionStorage.getItem(userId));
   // const formattedId = {"id": item_value.id};
   // console.log('formattedId',user.id);
-
   const [sentRespons, setSentRespons] = useState({
     user_id: 0,
     question: 0,
     answer :''
+  })
+  const [userResult, setUserResult] = useState({
+    name: '',
+    description: '',
   })
   const [result, setResult] = useState({
     completed_percentage: 0,
@@ -42,9 +45,11 @@ const QuestionSec = () => {
     last_completed_question: 0,
   })
   const curruntUser = useSelector((state) => state.homeReducer.user);
-  const [userId, setUserId] = useState(curruntUser?.id);
+  // const fetchResult = useSelector((state) => state.homeReducer.data);
+  // setUserResult(JSON.parse(fetchResult));
 
-  console.log('curruntUser',curruntUser?.id);
+  const [userId, setUserId] = useState(0);
+
   const progressResponse = useSelector((state) => state.homeReducer.userProgress);
   useEffect(() => {
     if (progressResponse && progressResponse.length > 0) {
@@ -85,19 +90,32 @@ const fetchQuestionsformat = async () => {
 };
 //  const token = localStorage.getItem('token')
 //  console.log('token',token.user_id);
+
 useEffect(() => {
   if (curruntUser) {
     setUserId(curruntUser.id);
   }
-}, [curruntUser]);
-useEffect(() => {
-  // console.log('fetchQuestions',fetchQuestions);
-  dispatch(fetchQuestions());
-  // dispatch(fetchUser());
 }, []);
 useEffect(() => {
+  // Get the token from local storage
+  const token = localStorage.getItem("token");
+
+  // Check if the token is present
+  if (token) {
+    // Call some function or API that requires authentication
+    // Example: dispatch an action to fetch user data from an API using the token
+    dispatch(fetchUser(token));
+  }
+}, [localStorage.getItem("token")]); // Include the token as a dependency
+
+useEffect(() => {
+  // dispatch(fetchUser(token));
+
+  dispatch(fetchQuestions());
   dispatch(fetchUser());
-}, [token]);
+}, []);
+// useEffect(() => {
+// }, [token]);
 
 useEffect(() => {
   fetchQuestionsformat();
@@ -207,6 +225,19 @@ const questionId = questions[activeQuestion]?.questionId;
     console.log('completed_question', result.completed_percentage);
     setActiveQuestion((prev) => prev - 1)
   }
+  const onClickHome = ()=>{
+    setResult((prev) => ({
+      ...prev,
+      completed_percentage: prev.completed_percentage = 0,
+      question_left: 0,
+      // completed_question: 0,
+
+    }));
+    // console.log('completed_question', result.completed_percentage);
+    // setActiveQuestion((prev) => prev - 1)
+    // setActiveQuestion((prev) => prev = 0)
+    setActiveQuestion(0)
+  }
   const onClickNext = () => { 
     if (!token) {
       // User ID not found, show error message
@@ -232,6 +263,12 @@ const questionId = questions[activeQuestion]?.questionId;
       } else {
         nextStep()
         setActiveQuestion(0)
+        dispatch(fetchUserResult());
+        setUserResult((prev) => ({
+          ...prev,
+          name: userResult.name,
+          description: userResult.description,
+        }))
         dispatch(fetchUserProgress(userId))
         setShowResult(true)
       }
@@ -285,7 +322,7 @@ const questionId = questions[activeQuestion]?.questionId;
       <div className="row toop-sec">
 
        <div className="col-8 d-flex align-items-center ">
-          <button >Back to Homepage</button>
+          <button onClick={onClickHome}>Back to Homepage</button>
         </div>
              <div className="col-lg-8 col-md-12 ">
               <h3><BsTools className="tool-icon"/>The Leadership Compass</h3>
@@ -416,12 +453,12 @@ const questionId = questions[activeQuestion]?.questionId;
         <div className="result">
           <h3>Result</h3>
           <p>
-            Total Question: <span>{questions.length}</span>
+            Name: <span>{userResult.name}</span>
           </p>
           <p>
-          Completed Percentage:<span> {progressResponse.completed_percentage}</span>
+          Discripton:<span> {userResult.description}</span>
           </p>
-          <p>
+          {/* <p>
           Completed Question:<span> {progressResponse.completed_question}</span>
           </p>
           <p>
@@ -429,7 +466,7 @@ const questionId = questions[activeQuestion]?.questionId;
           </p>
           <p>
           Last Completed Question:<span> {progressResponse.last_completed_question}</span>
-          </p>
+          </p> */}
         </div>
       )}
             </div>

@@ -48,3 +48,14 @@ export const fetchUser = createAsyncThunk(
     return response.data;
   }
 );
+export const fetchUserResult = createAsyncThunk(
+  "userResult/fetchUserResult",
+  async (id) => {
+    const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${18}/`, {
+      responseType: "html"
+    });
+    // const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${id}/`);
+    console.log('userResult.data',response.data);
+    return response.data;
+  }
+);

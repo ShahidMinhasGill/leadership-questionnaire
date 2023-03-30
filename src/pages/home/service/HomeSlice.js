@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchQuestions, fetchUser, fetchUserProgress, postResponse } from './HomeApi';
+import {fetchUser, fetchQuestions, fetchUserProgress, fetchUserResult, postResponse } from './HomeApi';
 
 const questionsSlice = createSlice({
   name: 'questions',
@@ -32,6 +32,10 @@ const questionsSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload;
         console.log('state.user',state.user);
+      })
+      .addCase(fetchUserResult.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
       })
   },
 });

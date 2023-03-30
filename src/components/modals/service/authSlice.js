@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchUser, login, registerUser } from './authApi';
+import {  login, registerUser } from './authApi';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -34,6 +34,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = null;
       })
+   
    
   },
 });
