@@ -403,14 +403,12 @@ const questionId = questions[activeQuestion]?.questionId;
         <div className="result">
           <h3>Result</h3>
       
- 
-         
-          <p>
-          Leadership Type:<span> {fetchResult?.leadership_type?.name}</span>
-          </p>
-          {/* <p>
-          Discripton:<span> {fetchResult?.leadership_type?.description}</span>
-          </p> */}
+          <div>
+      <h2>Leadership Type</h2>
+      <p>Name: {fetchResult?.leadership_type?.name}</p>
+      <p>Description:</p>
+      <div dangerouslySetInnerHTML={{ __html: fetchResult?.leadership_type?.description }} />
+    </div>
           {/* Discripton:<span> {userResult.description}</span> */}
           {/* <p>
           Completed Question:<span> {progressResponse.completed_question}</span>
