@@ -24,7 +24,7 @@ const QuestionSec = () => {
   // if (token) {
   //    userId =  user?.id
   // }
- console.log('userId',token);
+ console.log('userId',user?.id);
 
 // const item_value = JSON.parse(sessionStorage.getItem(userId));
   // const formattedId = {"id": item_value.id};
@@ -45,8 +45,9 @@ const QuestionSec = () => {
     last_completed_question: 0,
   })
   const curruntUser = useSelector((state) => state.homeReducer.user);
-  // const fetchResult = useSelector((state) => state.homeReducer.data);
+  const fetchResult = useSelector((state) => state.homeReducer.data);
   // setUserResult(JSON.parse(fetchResult));
+  console.log('fetchResult',fetchResult?.leadership_type?.name);
 
   const [userId, setUserId] = useState(0);
 
@@ -93,30 +94,19 @@ const fetchQuestionsformat = async () => {
 
 useEffect(() => {
   if (curruntUser) {
-    setUserId(curruntUser.id);
+    setUserId(user?.id);
   }
 }, []);
-useEffect(() => {
-  // Get the token from local storage
-  const token = localStorage.getItem("token");
-
-  // Check if the token is present
-  if (token) {
-    // Call some function or API that requires authentication
-    // Example: dispatch an action to fetch user data from an API using the token
-    dispatch(fetchUser(token));
-  }
-}, [localStorage.getItem("token")]); // Include the token as a dependency
 
 useEffect(() => {
   // dispatch(fetchUser(token));
-
   dispatch(fetchQuestions());
   dispatch(fetchUser());
 }, []);
 // useEffect(() => {
 // }, [token]);
 
+console.log('setUserResult',userResult);
 useEffect(() => {
   fetchQuestionsformat();
 }, [getQuestions]);
@@ -154,60 +144,13 @@ if (loading) {
 const question = questions[activeQuestion]?.question;
 const choices = questions[activeQuestion]?.choices;
 const questionId = questions[activeQuestion]?.questionId;
-// const user_id = curruntUser?.id;
-// console.log('user_id', user_id);
-  // const quiz = {
-  //   topic: 'Javascript',
-  //   level: 'Beginner',
-  //   totalQuestions: 10,
-  //   perQuestionScore: 5,
-  //   // totalTime: 60, // in seconds
-  //   questions: [],
-  // };
 
- 
-  // const quiz = {
-  //   topic: 'Javascript',
-  //   level: 'Beginner',
-  //   totalQuestions: 10,
-  //   perQuestionScore: 5,
-  //   totalTime: 60, 
-  //   questions: [
-  //     {
-  //       question:
-  //         'Which function is used to serialize an object into a JSON string in Javascript?',
-  //         choices : ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-  //         type: 'MCQs',
-  //       correctAnswer: 'stringify()',
-  //     },
-  //     {
-  //       question:
-  //         'Which of the following keywords is used to define a variable in Javascript?',
-  //         choices : ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-  //         type: 'MCQs',
-  //       correctAnswer: 'var and let',
-  //     },
-  //     {
-  //       question:
-  //         'Which of the following methods can be used to display data in some form using Javascript?',
-  //         choices : ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-  
-  //       type: 'MCQs',
-  //       correctAnswer: 'All of the above',
-  //     },
-  //     {
-  //       question: 'How can a datatype be declared to be a constant type?',
-  //        choices : ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-  //       type: 'MCQs',
-  //       correctAnswer: 'const',
-  //     },
-  //   ],
-  // }
   function handleCheckboxChange(event) {
     const { name } = event.target;
     setChecked(name === checked ? '' : name);
   }
   const nextStep = () => {
+  
     if (result.completed_percentage >= 100) return;
       setResult((prev) => ({
         ...prev,
@@ -217,7 +160,7 @@ const questionId = questions[activeQuestion]?.questionId;
   };
  
   const handleBack = ()=>{
-    if (result.completed_percentage >= 100) return;
+    // if (result.completed_percentage >= 100) return;
     setResult((prev) => ({
       ...prev,
       completed_percentage: prev.completed_percentage - (100 / 24),
@@ -233,6 +176,9 @@ const questionId = questions[activeQuestion]?.questionId;
       // completed_question: 0,
 
     }));
+    // dispatch(fetchQuestions());
+    setShowResult(false)
+
     // console.log('completed_question', result.completed_percentage);
     // setActiveQuestion((prev) => prev - 1)
     // setActiveQuestion((prev) => prev = 0)
@@ -246,6 +192,7 @@ const questionId = questions[activeQuestion]?.questionId;
       dispatch(postResponse(sentRespons));
       setSelectedAnswerIndex(null)
       setChecked(null) 
+    
       console.log('question_left',result.question_left);
       setResult((prev) =>
         selectedAnswer
@@ -261,16 +208,19 @@ const questionId = questions[activeQuestion]?.questionId;
         setActiveQuestion((prev) => prev + 1)
         nextStep()
       } else {
+        // setUserResult((prev) => ({
+        //   ...prev,
+        //   name: fetchResult?.leadership_type?.name,
+        //   description: fetchResult?.leadership_type?.description,
+        // }))
+        dispatch(fetchUserResult());
         nextStep()
         setActiveQuestion(0)
-        dispatch(fetchUserResult());
-        setUserResult((prev) => ({
-          ...prev,
-          name: userResult.name,
-          description: userResult.description,
-        }))
+        setActiveQuestion(0)
         dispatch(fetchUserProgress(userId))
         setShowResult(true)
+        localStorage.removeItem('progressBarState');
+
       }
     }
   }
@@ -452,12 +402,16 @@ const questionId = questions[activeQuestion]?.questionId;
       ) : (
         <div className="result">
           <h3>Result</h3>
+      
+ 
+         
           <p>
-            Name: <span>{userResult.name}</span>
+          Leadership Type:<span> {fetchResult?.leadership_type?.name}</span>
           </p>
-          <p>
-          Discripton:<span> {userResult.description}</span>
-          </p>
+          {/* <p>
+          Discripton:<span> {fetchResult?.leadership_type?.description}</span>
+          </p> */}
+          {/* Discripton:<span> {userResult.description}</span> */}
           {/* <p>
           Completed Question:<span> {progressResponse.completed_question}</span>
           </p>

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { fetchUser } from '../../../pages/home/service/HomeApi';
 
 export const registerUser = createAsyncThunk(
   'auth/register',
@@ -16,12 +17,14 @@ export const registerUser = createAsyncThunk(
   }
 );
 export const login = createAsyncThunk(
+
   'login/login',
-  async (userData) => {
+  async (userData,{dispatch}) => {
     const response = await axios.post('https://walrus-app-xqntt.ondigitalocean.app/api/login/', userData);
     const {  token } = response.data;
     // sessionStorage.setItem('user', JSON.stringify(user));
     sessionStorage.setItem('token', token);
+    dispatch(fetchUser())
     return response.data;
   }
 );

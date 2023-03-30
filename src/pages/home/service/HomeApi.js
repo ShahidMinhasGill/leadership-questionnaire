@@ -45,14 +45,17 @@ export const fetchUser = createAsyncThunk(
       headers: { Authorization: `token ${token}` },
     });
     console.log('response.data',response.data);
+    sessionStorage.setItem('user',JSON.stringify(response.data))
     return response.data;
   }
 );
 export const fetchUserResult = createAsyncThunk(
   "userResult/fetchUserResult",
   async (id) => {
-    const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${18}/`, {
-      responseType: "html"
+    const getUser = sessionStorage.getItem('user');
+    const token = sessionStorage.getItem('token');
+    const user = JSON.parse(getUser);
+    const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${user?.id}/`, {
     });
     // const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${id}/`);
     console.log('userResult.data',response.data);
