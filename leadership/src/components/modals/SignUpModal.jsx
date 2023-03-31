@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {Row, Col, Modal, Spinner, Form} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, useNavigate } from "react-router-dom";
@@ -15,46 +15,13 @@ const initialValues = {
 const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate ()
-    const [username, setUserName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-    const [accountCreated, setAccountCreated] = useState("");
-    const [alreadyExists, setAlreadyExists] = useState("");
-    const [loader, setLoader] = useState(false);
-    const [formSubmitted, setFormSubmitted] = useState(false);
-    const [loginSuccessful, setLoginSuccessful] = useState("");
-    const [incorrectFields, setIncorrectFields] = useState("");
-    const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-
     // const isLoading = useSelector(state => state.auth.isLoading)
     // const error = useSelector(state => state.auth.error)
     // const token = useSelector(state => state.token)
     // const { isLoading, token, error } = useSelector((state) => auth.state);
-    const token = sessionStorage.getItem('token')
       const [values, setValues] = useState(initialValues);
 
-      useEffect(() => {
-        if (formSubmitted ) {
-          toast.success('Account Created Successfully!')
-          setLoader(false);
-          setIncorrectFields("");
-          onHide(false)
-        } else if (formSubmitted){
-          setLoginSuccessful("");
-          setLoader(false);
-          toast.error('Email Already Exists!')
-        }
-      }, [formSubmitted]);
-      const handleUsernameChange = (event) => {
-        setUserName(event.target.value);
-      };
-      const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-      };
-      const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-      };
+
       const handleInputChange = (e) => {
         //const name = e.target.name 
         //const value = e.target.value 
@@ -68,21 +35,49 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
       
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === "" ||  email === "" || !emailRegExp.test(email)  || password === "" || password.length < 8) {
-        if (!error) {
-            setError(true);
-          }
-      } else {
-        setLoader(true); 
-        const userData = {
-            username: username,
-            email: email,
-            password: password,
-              };
-              dispatch(registerUser(userData));
-              setFormSubmitted(true);
-      }
+    const userData = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+      };
+      dispatch(registerUser(userData));
+      toast.success("you are succesfully Registerd");
+    //   navigate(hideSignUpShowLogin)
+    //   if (isLoading === 'loading') {
+    //     return <div>Loading...</div>;
+    //   }
+    
+    //   if (error) {
+    //     return <div>Error: {error}</div>;
+    //   }
+    //   if (token) {
+    //     localStorage.setItem('token', token);
+    // }
+  
+      console.log('values',values);
+    //   dispatch(registerSlice({values}))
 
+    // const { welcomeMessage } = props;
+    const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    
+    // if (
+    //   email === "" ||
+    //   !emailRegExp.test(email) ||
+    //   password === "" ||
+    //   password.length < 8 ||
+    //   username === ""
+    // ) {
+    //   if (!error) {
+    //     setState({ ...state, error: true });
+    //   }
+    // } else {
+    //   let body = {
+    //     email: email,
+    //     password: password,
+    //     last_name: username,
+    //   };
+    //   console.log('body',body);
+    // }
   };
 
   return (
@@ -112,8 +107,8 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
                 <div className="namediv">
                     <input
                         type="text"
-                        value={username}
-                        onChange={handleUsernameChange}
+                        value={values.username}
+                        onChange={handleInputChange}
                         name="username"
                         className="namebox"
                         placeholder="username"
@@ -121,7 +116,7 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
                     <i className="fa fa-user nameimg"/>
                 </div>
                 {
-                    error && username === "" ? (
+                    values.error && values.username === "" ? (
                         <div className="error">Please enter your username.</div>
                     ) : ""
                 }
@@ -130,8 +125,8 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
         <div className="maildiv">
             <input
                 type="email"
-                value={email}
-                onChange={handleEmailChange}
+                value={values.email}
+                onChange={handleInputChange}
                 name="email"
                 placeholder="Email"
                 className="mailbox"
@@ -139,11 +134,11 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
             <i className="fa fa-envelope-square loginmail"/>
         </div>
         {
-            error ? (
+            values.error ? (
                 <div className="error">
                     {
-                        email === "" ? "Please enter your email." :
-                            !emailRegExp.test(email) ? "Email is not valid." : ""
+                        values.email === "" ? "Please enter your email." :
+                            !values.emailRegExp.test(values.email) ? "Email is not valid." : ""
                     }
                 </div>
             ) : ""
@@ -151,8 +146,8 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
         <div className="paswdiv">
             <input
                 type="password"
-                value={password}
-                onChange={handlePasswordChange}
+                value={values.password}
+                onChange={handleInputChange}
                 name="password"
                 className="paswbox"
                 placeholder="Password"
@@ -160,11 +155,11 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
             <i className="fa fa-lock loginpassword"/>
         </div>
         {
-            error ? (
+            values.error ? (
                 <div className="error">
                     {
-                        password === "" ? "Please enter your password." :
-                        password.length < 8 ? "Password must contain at least 8 characters."
+                        values.password === "" ? "Please enter your password." :
+                        values.password.length < 8 ? "Password must contain at least 8 characters."
                                 : ""
                     }
                 </div>
@@ -176,8 +171,6 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
         <button className="loginbtn" type="submit" >
              Create Account
         </button>
-        {loader && <p>Loading...</p>}
-        {loginSuccessful && <p>{loginSuccessful}</p>}
       </Form>
     </Modal.Body>
 

@@ -13,13 +13,22 @@ const QuestionSec = () => {
   const [showResult, setShowResult] = useState(false)
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null)
   // const [percentage, setPercentage] = useState(0);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState('');
   const dispatch = useDispatch();
+  const mainColRef = useRef(null);
+  // var item_value = sessionStorage.getItem("user");
   const getUser = sessionStorage.getItem('user');
   const token = sessionStorage.getItem('token');
   const user = JSON.parse(getUser);
-
+  // let userId = 1
+  // if (token) {
+  //    userId =  user?.id
+  // }
  console.log('userId',user?.id);
+
+// const item_value = JSON.parse(sessionStorage.getItem(userId));
+  // const formattedId = {"id": item_value.id};
+  // console.log('formattedId',user.id);
   const [sentRespons, setSentRespons] = useState({
     user_id: 0,
     question: 0,
@@ -80,7 +89,14 @@ const fetchQuestionsformat = async () => {
     console.error(error);
   }
 };
+//  const token = localStorage.getItem('token')
+//  console.log('token',token.user_id);
 
+useEffect(() => {
+  if (curruntUser) {
+    setUserId(user?.id);
+  }
+}, []);
 
 useEffect(() => {
   // dispatch(fetchUser(token));
@@ -201,7 +217,7 @@ const questionId = questions[activeQuestion]?.questionId;
         nextStep()
         setActiveQuestion(0)
         setActiveQuestion(0)
-        dispatch(fetchUserProgress(user?.id))
+        dispatch(fetchUserProgress(userId))
         setShowResult(true)
         localStorage.removeItem('progressBarState');
 
@@ -210,12 +226,17 @@ const questionId = questions[activeQuestion]?.questionId;
   }
 
   const onAnswerSelected = (answer, index) => {
+    const radioButtons = mainColRef.current.querySelectorAll('input[type="radio"]');
+    console.log('radioButtons',radioButtons);
+    radioButtons.forEach(radioButton => {
+      radioButton.checked = true;
+      console.log('radioButtons',radioButton);
+    });
+    // handleCheckboxChange(radioButtons); // Call the onChange handler to update state
     setResult((prev) => ({
       ...prev,
       question_left: questions.length - activeQuestion - 1,
     }))
-    setChecked(answer === checked ? '' : answer);
-
     if (answer === 'Strongly Agree') {
       answer = -2;
     }else if (answer === 'Agree') {
@@ -229,7 +250,7 @@ const questionId = questions[activeQuestion]?.questionId;
     }
     setSentRespons(prevState => ({
       ...prevState,
-      user_id :user?.id,
+      user_id :userId,
       answer: answer,
       question: questionId,
     }))
@@ -237,6 +258,11 @@ const questionId = questions[activeQuestion]?.questionId;
     console.log('completed_question',result.completed_question);
     console.log(answer);
     setSelectedAnswerIndex(answer)
+    // if (answer === correctAnswer) {
+    //   setSelectedAnswer(true)
+    // } else {
+    //   setSelectedAnswer(false)
+    // }
   }
 
   const addLeadingZero = (number) => (number > 9 ? number : `0${number}`)
@@ -251,13 +277,8 @@ const questionId = questions[activeQuestion]?.questionId;
              <div className="col-lg-8 col-md-12 ">
               <h3><BsTools className="tool-icon"/>The Leadership Compass</h3>
           </div>
-             <div className="col-lg-11 col-md-12 ">
-              <p>The Leadership Compass: Charting Your Path 
-              After an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader. In order to better serve your needs, we have built this questionnaire that allows you to identify your segmentation type. 
-               
-              Follow through these questions to learn which of the six leadership segments you most exemplify, and how this information can help you to become a better leader.
-              <br />
-              Select your response to each of the statements below:
+             <div className="col-lg-10 col-md-12 ">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec porttitor massa. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam rhoncus vel massa et viverra. Praesent et lobortis metus, nec tempus purus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.
              </p>
           </div>
       </div>
@@ -265,10 +286,17 @@ const questionId = questions[activeQuestion]?.questionId;
         <div className="col-3 d-flex align-items-center back-btn">
           <button onClick={handleBack}
           disabled={(activeQuestion === 0)}
-          > Back</button>
+          >
+          {/* <button 
+           onClick={onClickNext}
+           disabled={selectedAnswerIndex === null}
+          >
+          {activeQuestion === 1  ? disabled : enabled}
+          </button> */}
+            Back</button>
         </div>
-        <div className="col-6">
-          <div className="col-7 mx-auto ">
+        <div className="col-8">
+          <div className="col-7">
            
             <h3>Question <span className="active-question-no " style={{marginLeft:'5px'}}>
               {(activeQuestion + 1)}
@@ -294,9 +322,14 @@ const questionId = questions[activeQuestion]?.questionId;
               /{addLeadingZero(questions.length)}
             </span>
           </div>
+          {/* <div className="col-1 text-center">
+            <h2>{addLeadingZero(activeQuestion + 1)}</h2>
+          </div> */}
           <div className="col-lg-11 col-md-12 mt-3 m-3 ">
             <h2>
-            {question}            
+            {question}
+            {/* <li >{questionId}</li> */}
+            
             </h2>
           </div>
         </div>
@@ -305,7 +338,7 @@ const questionId = questions[activeQuestion]?.questionId;
         </div>
         <div className="col-10 mt-3 mx-auto">
         {choices?.map((answer, index) => (
-          <div  onClick={() => onAnswerSelected(answer, index)} className={`col-lg-6 col-12 d-flex  ${index % 2 !== 1 ? 'question-bg' : 'question-bg2'}`}>
+          <div  onClick={() => onAnswerSelected(answer, index)} className={`col-lg-6 col-12 d-flex ${index % 2 !== 1 ? 'question-bg' : 'question-bg2'}`} ref={mainColRef}>
             <div className="col-lg-1 col-2 d-flex justify-content-center align-items-center">
               <input
                 class="form-check-input"
@@ -324,6 +357,20 @@ const questionId = questions[activeQuestion]?.questionId;
           </div>
              ))}
         </div>
+          {/* <ul>
+            {choices.map((answer, index) => (
+              <li
+                onClick={() => onAnswerSelected(answer, index)}
+                key={answer}
+                className={
+                  selectedAnswerIndex === index ? 'selected-answer' : null
+                }
+              >
+                {answer}
+              </li>
+            ))}
+          </ul> */}
+            
       <div className="row question-sec mt-5 p-3" style={{borderRadius:'0px 0 10px 15px'}} >
         <div className="col-lg-1 col-md-2 col-4 d-flex align-items-center back-btn">
           <button 
