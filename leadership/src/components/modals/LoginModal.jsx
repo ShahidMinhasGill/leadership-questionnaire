@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Row, Col, Modal, Spinner, Form} from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { login } from "./service/authApi";
 
-const initialValues = {
-    username: "",
-    password: "",
-    // alreadyExists: "",
-    // error: "",
-  };
+
 const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate ()
@@ -18,64 +13,75 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     // const error = useSelector(state => state.auth.error)
     // const token = useSelector(state => state.token)
     // const { isLoading, token, error } = useSelector((state) => auth.state);
-      const [values, setValues] = useState(initialValues);
-
-
-      const handleInputChange = (e) => {
-        //const name = e.target.name 
-        //const value = e.target.value 
-        const { name, value } = e.target;
-    
-        setValues({
-          ...values,
-          [name]: value,
-        });
+    const getUser = sessionStorage.getItem('user');
+    const token = sessionStorage.getItem('token');
+    const user = JSON.parse(getUser);
+   
+    console.log('user123',token);
+    const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const [username, setUserName] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
+    const [loader, setLoader] = useState(false);
+    const [loginSuccessful, setLoginSuccessful] = useState("");
+    const [incorrectFields, setIncorrectFields] = useState("");
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const loggedInUser = useSelector((state) => state.homeReducer.user);
+      const handleUsernameChange = (event) => {
+        setUserName(event.target.value);
       };
-      
+    useEffect(() => {
+        if (formSubmitted && loggedInUser) {
+          toast.success('Login Successful!')
+          setLoader(false);
+          setIncorrectFields("");
+          setUserName("");
+          setPassword('');
+          onHide(false)
+        } else if (formSubmitted ){
+          setLoginSuccessful("");
+          setLoader(false);
+        //   toast.error('Incorrect email or password!')
+        }
+      }, [formSubmitted, loggedInUser]);
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+      };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = {
-        username: values.username,
-        password: values.password,
-      };
-      dispatch(login(userData));
-      toast.success("you are succesfully loggedin");
-      navigate(hideSignUpShowLogin)
-    //   if (isLoading === 'loading') {
-    //     return <div>Loading...</div>;
-    //   }
-    
-    //   if (error) {
-    //     return <div>Error: {error}</div>;
-    //   }
-    //   if (token) {
-    //     localStorage.setItem('token', token);
-    // }
-  
-      console.log('values',values);
-    //   dispatch(registerSlice({values}))
 
-    // const { welcomeMessage } = props;
-    const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    
-    // if (
-    //   email === "" ||
-    //   !emailRegExp.test(email) ||
-    //   password === "" ||
-    //   password.length < 8 ||
-    //   username === ""
-    // ) {
-    //   if (!error) {
-    //     setState({ ...state, error: true });
-    //   }
-    // } else {
-    //   let body = {
-    //     email: email,
-    //     password: password,
-    //     last_name: username,
-    //   };
-    //   console.log('body',body);
-    // }
+    if (username === ""  || password === "" || password.length < 8) {
+        if (!error) {
+            setError(true);
+          }
+      } else {
+        setLoader(true);
+        
+        const userData = {
+                username: username,
+                password: password,
+              };
+              dispatch(login(userData));
+              setFormSubmitted(true);
+            //   dispatch(login(userData));
+            //   setIncorrectFields("Incorrect email or password!");
+        //   if (!token) {
+        //     toast.error('Incorrect email or password!')
+        //   }
+        //   dispatch(login(userData, (data)=> {
+        //     console.log('userData1',userData);
+        //     if (data) {
+        //       setLoginSuccessful("Login Successful!");
+        //       setLoader(false);
+        //       setIncorrectFields("");
+        //       welcomeMessage("Fayaz");
+        //     } else {
+        //       setLoginSuccessful("");
+        //       setLoader(false);
+        //       setIncorrectFields("Incorrect email or password!");
+        //     }
+        //   }));
+      }
   };
 
   return (
@@ -89,10 +95,10 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     <Modal.Body>
         <Form onSubmit={handleSubmit}>
         <div className="main">
-            <h1>Register now</h1>
-            <p className="title">Don't have an account yet?
+            <h1>Login </h1>
+            {/* <p className="title">Don't have an account yet?
                 <span onClick={hideSignUpShowLogin}> Create it now</span>
-            </p>
+            </p> */}
             {/* <button className="google">
                 <img src={logingoogle} alt="logingoogle" className="logingoogle"/>
                 Continue with Google
@@ -105,8 +111,8 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
                 <div className="namediv">
                     <input
                         type="text"
-                        value={values.username}
-                        onChange={handleInputChange}
+                        value={username}
+                        onChange={handleUsernameChange}
                         name="username"
                         className="namebox"
                         placeholder="username"
@@ -114,7 +120,7 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
                     <i className="fa fa-user nameimg"/>
                 </div>
                 {
-                    values.error && values.username === "" ? (
+                    error && username === "" ? (
                         <div className="error">Please enter your username.</div>
                     ) : ""
                 }
@@ -123,8 +129,8 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
         <div className="paswdiv">
             <input
                 type="password"
-                value={values.password}
-                onChange={handleInputChange}
+                value={password}
+                onChange={handlePasswordChange}
                 name="password"
                 className="paswbox"
                 placeholder="Password"
@@ -132,11 +138,11 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
             <i className="fa fa-lock loginpassword"/>
         </div>
         {
-            values.error ? (
+            error ? (
                 <div className="error">
                     {
-                        values.password === "" ? "Please enter your password." :
-                        values.password.length < 8 ? "Password must contain at least 8 characters."
+                       password === "" ? "Please enter your password." :
+                        password.length < 8 ? "Password must contain at least 8 characters."
                                 : ""
                     }
                 </div>
@@ -146,8 +152,10 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
 
 
         <button className="loginbtn" type="submit" >
-             Create Account
+            Login
         </button>
+        {loader && <p>Loading...</p>}
+        {loginSuccessful && <p>{loginSuccessful}</p>}
       </Form>
     </Modal.Body>
 

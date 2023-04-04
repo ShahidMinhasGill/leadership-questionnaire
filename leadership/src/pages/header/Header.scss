@@ -13,7 +13,7 @@
       border: 1px solid #ec008c;
       border-radius: 5px 0 0 5px;
       font-family: Poppins, Arial, Helvetica, sans-serif;
-      font-size: 16px;
+      font-size: 12px;
       font-style: normal;
       font-weight: 400;
       height: 100%;
@@ -29,7 +29,7 @@
       border-radius: 0 5px 5px 0;
       color: #fff;
       font-family: Poppins;
-      font-size: 18px;
+      font-size: 14px;
       font-style: normal;
       font-weight: 600;
       height: 100%;
@@ -128,12 +128,21 @@
     margin: 0 !important;
   }
   .navclass {
+    .logo{
+      img{
+        display: none;
+      }
+    }
     .profile-icon {
       display: block;
       width: 25px;
-      height: 25px;
-      fill: #ff9700;
+      img{
+        height: 25px;
+        fill: #ff9700;
+      }
+     
     }
+    
     .icon {
       display: none;
     }

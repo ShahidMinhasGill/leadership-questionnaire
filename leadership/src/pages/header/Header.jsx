@@ -55,7 +55,7 @@ function Header() {
     setDropdownValue(e.target.value);
     setDropdownValue2(e.target.value);
   };
-
+  const token = sessionStorage.getItem('token')
   return (
     <>
     <div className="navclass">
@@ -68,7 +68,11 @@ function Header() {
         <Navbar collapseOnSelect expand="lg" className="navbar navbar-light">
       <Container>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <BsPersonCircle className="profile-icon" />
+        {/* <BsPersonCircle className="profile-icon" /> */}
+        <div className="col-lg-4 col-12 profile-icon " >
+         <img src={logo} alt="" />
+        </div>
+        
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="navbar-nav ms-auto mobileStyle d-flex align-items-center">
             <Link to="/">Mentoring & board</Link>
@@ -77,9 +81,9 @@ function Header() {
             <Link to="#"   onClick={() =>  setState(prevState => ({
                       ...prevState,
                       showSignUp: true,
-                      
                     }))}>
-              Login
+                 {!token ?  'Login' : 'Logout'}
+              {/* Login */}
             </Link>
              
 
@@ -100,16 +104,8 @@ function Header() {
         <div className="col-lg-4 col-12 logo " >
         {value.includes(1) && <img src={logo} alt="" />}
         </div>
-        <div className="col-lg-8 col-12 dropdwons d-flex justify-content-around">
+        <div className="col-lg-8 col-12 dropdwons d-flex justify-content-around align-items-baseline">
         {value.includes(2) && (
-        // <Dropdown>
-        //   <Dropdown.Toggle variant="light" id="dropdown-basic">{dropdownValue}</Dropdown.Toggle>
-        //   <Dropdown.Menu>
-        //     <Dropdown.Item onClick={() => setDropdownValue('Option 1')}>Option 1</Dropdown.Item>
-        //     <Dropdown.Item onClick={() => setDropdownValue('Option 2')}>Option 2</Dropdown.Item>
-        //     <Dropdown.Item onClick={() => setDropdownValue('Option 3')}>Option 3</Dropdown.Item>
-        //   </Dropdown.Menu>
-        // </Dropdown>
         <Nav className="ms-auto dir">
         <select className="select" defaultValue={dropdownValue} onChange={handleChange}>
           {commonBusiness.map((commonBusiness, index) => (
@@ -159,6 +155,27 @@ function Header() {
         {/* <button onClick={() => setShowLogin(true)}>Login</button> */}
       </Nav>
       )}
+        {value.includes(2) && (
+        // <Dropdown>
+        //   <Dropdown.Toggle variant="light" id="dropdown-basic">{dropdownValue}</Dropdown.Toggle>
+        //   <Dropdown.Menu>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 1')}>Option 1</Dropdown.Item>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 2')}>Option 2</Dropdown.Item>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 3')}>Option 3</Dropdown.Item>
+        //   </Dropdown.Menu>
+        // </Dropdown>
+        <Nav className="ms-auto dir">
+
+                      <Link to="/" className='select text-decoration-none'>Join us</Link>
+      
+        {/* {firstName ? (
+          <div className="welcomeMessage">Hi {firstName}</div>
+        ) : (
+          <button onClick={() => setShowLogin(true)}>Login</button>
+        )} */}
+        {/* <button onClick={() => setShowLogin(true)}>Login</button> */}
+      </Nav>
+      )}
         {/* {value.includes(2) && (
         <Nav className="ms-auto dir">
         <select className="select" defaultValue={joinus} onChange={handleChange}>
@@ -170,14 +187,7 @@ function Header() {
       )} */}
         </div>
       </div>
-      {/* <LoginModal
-                    show={showLogin}
-                    onHide={() => {
-                        this.setState({showLogin: false})
-                    }}
-                    welcomeMessage={() => this.welcomeMessage("showLogin")}
-                    hideLoginShowSignUp={() => this.setState({showLogin: false, showSignUp: true})}
-                /> */}
+   
       </Container>
               <LoginModal
                     show={state.showLogin}

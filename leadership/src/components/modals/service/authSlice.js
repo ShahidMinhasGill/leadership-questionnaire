@@ -10,6 +10,7 @@ const authSlice = createSlice({
     error: null,
     token: null,
     expiry: null,
+    userId:null
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -30,6 +31,7 @@ const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.token = action.payload.token;
+        state.userId = action.payload.userId;
         state.expiry = action.payload.expiry;
         state.isLoading = false;
         state.error = null;

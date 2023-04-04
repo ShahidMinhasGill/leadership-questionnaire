@@ -250,10 +250,12 @@ const questionId = questions[activeQuestion]?.questionId;
           <button onClick={onClickHome}>Back to Homepage</button>
         </div>
              <div className="col-lg-8 col-md-12 ">
-              <h3><BsTools className="tool-icon"/>The Leadership Compass</h3>
+              <h3><BsTools className="tool-icon"/>The Leadership Compass  <p style={{marginLeft:'51px',fontSize:'21px'}}>Charting Your Path</p></h3>
+             
+              
           </div>
              <div className="col-lg-11 col-md-12 ">
-              <p>The Leadership Compass: Charting Your Path 
+              <p>  
               After an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader.
                In order to better serve your needs, we have built this questionnaire that allows you to identify your segmentation type. 
                <br />

@@ -55,10 +55,12 @@
         color: #59358c;
       }
       .question-bg {
+        cursor: pointer;
         background: #f1f1f1;
         padding: 14px 0px;
       }
       .question-bg2 {
+        cursor: pointer;
         padding: 14px 0px;
       }
       .selected-answer {
@@ -164,6 +166,15 @@
 
     #vids a:first-of-type {
       margin-bottom: 5px;
+    }
+  }
+  .outcomes{
+    .friend-sec{
+      border-radius: 15px;
+      p{
+        padding: 32px;
+        font-size: 27px;
+      }
     }
   }
 

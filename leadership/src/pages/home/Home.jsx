@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import QuestionSec from "./components/QuestionSec";
+import Outcomes from "./components/Outcomes";
 // import { GetQuestionList } from "./service/createHomeApi";
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
           </div>
           </div>
         </div> */}
+          {/* <Outcomes /> */}
         <div className="row d-flex justify-content-center">
 
         <div className="col-10 mt-5" >
