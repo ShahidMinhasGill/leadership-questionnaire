@@ -67,7 +67,8 @@ const fetchQuestionsformat = async () => {
       getQuestions.map(async (question) => ({
         question: question.question_text,
         questionId: question.id,
-        choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
+        // choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
+        choices: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
         // choices: ['-2', '-1', '0', '1', '2'],
         // type: 'MCQs',
         // answer: question.answer,
@@ -217,15 +218,15 @@ const questionId = questions[activeQuestion]?.questionId;
     setChecked(answer === checked ? '' : answer);
 
     if (answer === 'Strongly Agree') {
-      answer = 2;
+      answer = 5;
     }else if (answer === 'Agree') {
-      answer = 1;
+      answer = 4;
     }else if (answer === 'Neutral') {
-      answer = 0;
+      answer = 3;
     }else if (answer === 'Disagree') {
-      answer = -1;
+      answer = 2;
     }else if (answer === 'Strongly Disagree') {
-      answer = -2;
+      answer = 1;
     }
     setSentRespons(prevState => ({
       ...prevState,
