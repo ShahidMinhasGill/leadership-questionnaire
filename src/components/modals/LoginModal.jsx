@@ -95,7 +95,7 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     <Modal.Body>
         <Form onSubmit={handleSubmit}>
         <div className="main">
-            <h1>Register now</h1>
+            <h1>Signup now</h1>
             <p className="title">Don't have an account yet?
                 <span onClick={hideSignUpShowLogin}> Create it now</span>
             </p>

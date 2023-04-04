@@ -86,6 +86,8 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
   };
 
   return (
+    <>
+    
     <Modal
     centered
     show={show}
@@ -182,6 +184,8 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     </Modal.Body>
 
 </Modal>
+    </>
+
     );
 };
 

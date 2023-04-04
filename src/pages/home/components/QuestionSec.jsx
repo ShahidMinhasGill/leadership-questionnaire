@@ -217,15 +217,15 @@ const questionId = questions[activeQuestion]?.questionId;
     setChecked(answer === checked ? '' : answer);
 
     if (answer === 'Strongly Agree') {
-      answer = -2;
+      answer = 2;
     }else if (answer === 'Agree') {
-      answer = -1;
+      answer = 1;
     }else if (answer === 'Neutral') {
       answer = 0;
     }else if (answer === 'Disagree') {
-      answer = 1;
+      answer = -1;
     }else if (answer === 'Strongly Disagree') {
-      answer = 2;
+      answer = -2;
     }
     setSentRespons(prevState => ({
       ...prevState,
@@ -253,9 +253,11 @@ const questionId = questions[activeQuestion]?.questionId;
           </div>
              <div className="col-lg-11 col-md-12 ">
               <p>The Leadership Compass: Charting Your Path 
-              After an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader. In order to better serve your needs, we have built this questionnaire that allows you to identify your segmentation type. 
-               
+              After an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader.
+               In order to better serve your needs, we have built this questionnaire that allows you to identify your segmentation type. 
+               <br />
               Follow through these questions to learn which of the six leadership segments you most exemplify, and how this information can help you to become a better leader.
+              <br />
               <br />
               Select your response to each of the statements below:
              </p>
