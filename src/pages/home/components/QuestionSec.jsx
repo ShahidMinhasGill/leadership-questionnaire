@@ -68,7 +68,7 @@ const fetchQuestionsformat = async () => {
         question: question.question_text,
         questionId: question.id,
         // choices: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-        choices: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
+        choices: ['Strongly Disagree', 'Disagree', 'Neither agree nor disagree', 'Agree', 'Strongly Agree'],
         // choices: ['-2', '-1', '0', '1', '2'],
         // type: 'MCQs',
         // answer: question.answer,
@@ -221,7 +221,7 @@ const questionId = questions[activeQuestion]?.questionId;
       answer = 5;
     }else if (answer === 'Agree') {
       answer = 4;
-    }else if (answer === 'Neutral') {
+    }else if (answer === 'Neither agree nor disagree') {
       answer = 3;
     }else if (answer === 'Disagree') {
       answer = 2;
@@ -321,7 +321,7 @@ const questionId = questions[activeQuestion]?.questionId;
               />
               {/* <h2>{index}</h2> */}
             </div>
-            <div className="col-lg-6 col-10 ">
+            <div className="col-lg-8 col-10 ">
               <h2>{answer}</h2>
             </div>
           </div>

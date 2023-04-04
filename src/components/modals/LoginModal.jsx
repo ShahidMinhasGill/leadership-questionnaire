@@ -95,9 +95,9 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     <Modal.Body>
         <Form onSubmit={handleSubmit}>
         <div className="main">
-            <h1>Signup now</h1>
-            <p className="title">Don't have an account yet?
-                <span onClick={hideSignUpShowLogin}> Create it now</span>
+            <h1>Login now</h1>
+            <p className="title">Please Login?
+                <span onClick={hideSignUpShowLogin}> Login Now</span>
             </p>
             {/* <button className="google">
                 <img src={logingoogle} alt="logingoogle" className="logingoogle"/>
@@ -152,7 +152,7 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
 
 
         <button className="loginbtn" type="submit" >
-             Create Account
+             Login
         </button>
         {loader && <p>Loading...</p>}
         {loginSuccessful && <p>{loginSuccessful}</p>}
