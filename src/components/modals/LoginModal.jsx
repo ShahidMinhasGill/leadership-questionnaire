@@ -96,9 +96,9 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
         <Form onSubmit={handleSubmit}>
         <div className="main">
             <h1>Login now</h1>
-            <p className="title">Please Login?
+            {/* <p className="title">Please Login?
                 <span onClick={hideSignUpShowLogin}> Login Now</span>
-            </p>
+            </p> */}
             {/* <button className="google">
                 <img src={logingoogle} alt="logingoogle" className="logingoogle"/>
                 Continue with Google
