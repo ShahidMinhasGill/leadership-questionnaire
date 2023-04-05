@@ -17,7 +17,6 @@ const LoginModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     const token = sessionStorage.getItem('token');
     const user = JSON.parse(getUser);
    
-    console.log('user123',token);
     const emailRegExp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");

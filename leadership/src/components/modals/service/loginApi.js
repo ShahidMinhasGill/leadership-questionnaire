@@ -12,10 +12,8 @@ import axios from 'axios';
 export const login = createAsyncThunk(
   'login/login',
   async (userData) => {
-    console.log('response1234',userData);
     const response = await axios.post('https://walrus-app-xqntt.ondigitalocean.app/api/login/', userData);
     localStorage.setItem('token', response.data.token);
-    console.log('login user',response.data);
     return response.data;
   }
 );
@@ -27,7 +25,6 @@ export const fetchUser = createAsyncThunk(
     const response = await axios.get('https://walrus-app-xqntt.ondigitalocean.app/api/auth/user', {
       headers: { Authorization: `token ${token}` },
     });
-    console.log('response.data',response.data);
     return response.data;
   }
 );

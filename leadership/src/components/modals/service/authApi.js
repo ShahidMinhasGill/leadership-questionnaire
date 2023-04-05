@@ -6,7 +6,6 @@ import { fetchUser } from '../../../pages/home/service/HomeApi';
 export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData,{dispatch}) => {
-    console.log('userData2',userData);
     
     try {
         const response = await axios.post('https://walrus-app-xqntt.ondigitalocean.app/api/register/', userData);

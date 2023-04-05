@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { fetchUser,fetchQuestions, fetchUserProgress, fetchUserResult, postResponse } from "../service/HomeApi"
 import { BsTools } from 'react-icons/bs';
 import { toast } from "react-toastify";
+import Outcomes from "./Outcomes";
 // import { fetchUser } from "../../../components/modals/service/authApi";
 const QuestionSec = () => {
   // const [activeQuestion, setActiveQuestion] = useState(0)
@@ -38,7 +39,7 @@ const QuestionSec = () => {
   const curruntUser = useSelector((state) => state.homeReducer.user);
   const fetchResult = useSelector((state) => state.homeReducer.data);
   // setUserResult(JSON.parse(fetchResult));
-  console.log('fetchResult',fetchResult?.leadership_type?.name);
+  console.log('fetchResult',fetchResult);
 
   const [userId, setUserId] = useState(0);
 
@@ -55,7 +56,6 @@ const QuestionSec = () => {
     }
   }, [progressResponse]);
   
-  console.log('result', result);
   const getQuestions = useSelector((state) => state.homeReducer.questions);
 const [activeQuestion, setActiveQuestion] = useState(0);
 const [questions, setQuestions] = useState([]);
@@ -87,11 +87,11 @@ useEffect(() => {
   // dispatch(fetchUser(token));
   dispatch(fetchQuestions());
   dispatch(fetchUser());
+  dispatch(fetchUserResult());
 }, []);
 // useEffect(() => {
 // }, [token]);
 
-console.log('setUserResult',userResult);
 useEffect(() => {
   fetchQuestionsformat();
 }, [getQuestions]);
@@ -108,7 +108,6 @@ useEffect(() => {
 useEffect(() => {
   // Get the progress bar state from localStorage
   const storedState = localStorage.getItem('progressBarState');
-  console.log('storedState', storedState);
   if (storedState) {
     setResult(JSON.parse(storedState));
   }
@@ -117,7 +116,6 @@ useEffect(() => {
 useEffect(() => {
   // Update localStorage whenever the progress bar state is updated
   localStorage.setItem('progressBarState', JSON.stringify(result));
-  console.log('updatedState', result);
 }, [result]);
 
 
@@ -141,7 +139,6 @@ const questionId = questions[activeQuestion]?.questionId;
         ...prev,
         completed_percentage: prev.completed_percentage + (100 / 24),
       }));
-      console.log('completed_question', result.completed_percentage);
   };
  
   const handleBack = ()=>{
@@ -150,7 +147,6 @@ const questionId = questions[activeQuestion]?.questionId;
       ...prev,
       completed_percentage: prev.completed_percentage - (100 / 24),
     }));
-    console.log('completed_question', result.completed_percentage);
     setActiveQuestion((prev) => prev - 1)
   }
   const onClickHome = ()=>{
@@ -177,8 +173,6 @@ const questionId = questions[activeQuestion]?.questionId;
       dispatch(postResponse(sentRespons));
       setSelectedAnswerIndex(null)
       setChecked(null) 
-    
-      console.log('question_left',result.question_left);
       setResult((prev) =>
         selectedAnswer
           ? {
@@ -193,12 +187,7 @@ const questionId = questions[activeQuestion]?.questionId;
         setActiveQuestion((prev) => prev + 1)
         nextStep()
       } else {
-        // setUserResult((prev) => ({
-        //   ...prev,
-        //   name: fetchResult?.leadership_type?.name,
-        //   description: fetchResult?.leadership_type?.description,
-        // }))
-        dispatch(fetchUserResult());
+        // dispatch(fetchUserResult());
         nextStep()
         setActiveQuestion(0)
         setActiveQuestion(0)
@@ -235,8 +224,6 @@ const questionId = questions[activeQuestion]?.questionId;
       question: questionId,
     }))
     
-    console.log('completed_question',result.completed_question);
-    console.log(answer);
     setSelectedAnswerIndex(answer)
   }
 
@@ -348,15 +335,10 @@ const questionId = questions[activeQuestion]?.questionId;
             </span></h3>
         </div>
       </div>
-          {/* <div className="flex-right">
-            <button
-              onClick={onClickNext}
-              disabled={selectedAnswerIndex === null}
-            >
-              {activeQuestion === questions.length - 1 ? 'Finish' : 'Next'}
-            </button>
-          </div> */}
+            <Outcomes />
+
         </div>
+        
       ) : (
         <div className="result">
           <h3>Result</h3>

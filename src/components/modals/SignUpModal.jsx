@@ -19,6 +19,7 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
+    const [loding, setLoding] = useState(false);
     const [accountCreated, setAccountCreated] = useState("");
     const [alreadyExists, setAlreadyExists] = useState("");
     const [loader, setLoader] = useState(false);
@@ -35,17 +36,19 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
       const [values, setValues] = useState(initialValues);
 
       useEffect(() => {
-        if (formSubmitted ) {
-          toast.success('Account Created Successfully!')
-          setLoader(false);
-          setIncorrectFields("");
-          onHide(false)
-        } else if (formSubmitted){
-          setLoginSuccessful("");
-          setLoader(false);
-          toast.error('Email Already Exists!')
-        }
-      }, [formSubmitted]);
+     if (token ) {
+        if (token && formSubmitted) {
+            toast.success('Account Created Successfully!')
+            setLoader(false);
+            setIncorrectFields("");
+            onHide(false)
+          } else{
+            setLoginSuccessful("");
+            setLoader(false);
+            // toast.error('Email Already Exists!')
+          }
+     }
+      }, [formSubmitted,token]);
       const handleUsernameChange = (event) => {
         setUserName(event.target.value);
       };
@@ -87,7 +90,7 @@ const SignUpModal = ({ show, onHide, welcomeMessage, hideSignUpShowLogin }) => {
 
   return (
     <>
-    
+    {loding}
     <Modal
     centered
     show={show}

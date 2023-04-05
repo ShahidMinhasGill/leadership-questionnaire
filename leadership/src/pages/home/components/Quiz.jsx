@@ -45,8 +45,6 @@ const QuestionSec = () => {
   const questions = useSelector((state) => state.homeReducer.questions);
   const currentData = questions.slice(indexOfFirstItem, indexOfLastItem);
 
-  console.log('questions',questions);
-
   useEffect(() => {
     dispatch(fetchQuestions());
   }, [dispatch]);
@@ -73,7 +71,6 @@ const QuestionSec = () => {
     setPercentage((prevPercentage) => prevPercentage - (100/30));
   };
   function handleChange(event) {
-    console.log('event',event);
     if (event.target.checked) {
       setCheckbox(true)
       nextStep();

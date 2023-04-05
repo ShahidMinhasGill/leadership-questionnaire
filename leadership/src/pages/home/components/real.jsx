@@ -57,7 +57,6 @@ const QuestionSec = () => {
       correctAnswer: question.answer,
     });
   });
-  console.log('questions420',questions);
 
   // const quiz = {
   //   topic: 'Javascript',

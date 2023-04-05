@@ -24,7 +24,6 @@ export default function Home() {
           </div>
           </div>
         </div> */}
-          {/* <Outcomes /> */}
         <div className="row d-flex justify-content-center">
 
         <div className="col-10 mt-5" >

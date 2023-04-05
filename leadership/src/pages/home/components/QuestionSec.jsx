@@ -55,7 +55,6 @@ const QuestionSec = () => {
     }
   }, [progressResponse]);
   
-  console.log('result', result);
   const getQuestions = useSelector((state) => state.homeReducer.questions);
 const [activeQuestion, setActiveQuestion] = useState(0);
 const [questions, setQuestions] = useState([]);
@@ -91,7 +90,6 @@ useEffect(() => {
 // useEffect(() => {
 // }, [token]);
 
-console.log('setUserResult',userResult);
 useEffect(() => {
   fetchQuestionsformat();
 }, [getQuestions]);
@@ -108,7 +106,6 @@ useEffect(() => {
 useEffect(() => {
   // Get the progress bar state from localStorage
   const storedState = localStorage.getItem('progressBarState');
-  console.log('storedState', storedState);
   if (storedState) {
     setResult(JSON.parse(storedState));
   }
@@ -117,7 +114,6 @@ useEffect(() => {
 useEffect(() => {
   // Update localStorage whenever the progress bar state is updated
   localStorage.setItem('progressBarState', JSON.stringify(result));
-  console.log('updatedState', result);
 }, [result]);
 
 
@@ -141,7 +137,6 @@ const questionId = questions[activeQuestion]?.questionId;
         ...prev,
         completed_percentage: prev.completed_percentage + (100 / 24),
       }));
-      console.log('completed_question', result.completed_percentage);
   };
  
   const handleBack = ()=>{
@@ -150,7 +145,6 @@ const questionId = questions[activeQuestion]?.questionId;
       ...prev,
       completed_percentage: prev.completed_percentage - (100 / 24),
     }));
-    console.log('completed_question', result.completed_percentage);
     setActiveQuestion((prev) => prev - 1)
   }
   const onClickHome = ()=>{
@@ -177,9 +171,7 @@ const questionId = questions[activeQuestion]?.questionId;
       dispatch(postResponse(sentRespons));
       setSelectedAnswerIndex(null)
       setChecked(null) 
-    
-      console.log('question_left',result.question_left);
-      setResult((prev) =>
+          setResult((prev) =>
         selectedAnswer
           ? {
               ...prev,
@@ -234,9 +226,6 @@ const questionId = questions[activeQuestion]?.questionId;
       answer: answer,
       question: questionId,
     }))
-    
-    console.log('completed_question',result.completed_question);
-    console.log(answer);
     setSelectedAnswerIndex(answer)
   }
 
