@@ -37,9 +37,8 @@ const QuestionSec = () => {
     last_completed_question: 0,
   })
   const curruntUser = useSelector((state) => state.homeReducer.user);
-  const fetchResult = useSelector((state) => state.homeReducer.data);
-  // setUserResult(JSON.parse(fetchResult));
-  console.log('fetchResult',fetchResult);
+  // const fetchResult = useSelector((state) => state.homeReducer.data);
+  // console.log('fetchResult',fetchResult);
 
   const [userId, setUserId] = useState(0);
 
@@ -335,19 +334,15 @@ const questionId = questions[activeQuestion]?.questionId;
             </span></h3>
         </div>
       </div>
-            <Outcomes />
 
         </div>
         
       ) : (
         <div className="result">
           <h3>Result</h3>
-      
+          <Outcomes />
+
           <div>
-      <h2>Leadership Type</h2>
-      <p>Name: {fetchResult?.leadership_type?.name}</p>
-      <p>Description:</p>
-      <div dangerouslySetInnerHTML={{ __html: fetchResult?.leadership_type?.description }} />
     </div>
           {/* Discripton:<span> {userResult.description}</span> */}
           {/* <p>
