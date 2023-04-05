@@ -149,7 +149,6 @@ const QuestionSec = () => {
       correctAnswers: answer,
       question: questionId,
     }))
-    console.log(answer);
     setSelectedAnswerIndex(answer)
     // if (answer === correctAnswer) {
     //   setSelectedAnswer(true)

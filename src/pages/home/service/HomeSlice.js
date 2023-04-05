@@ -15,7 +15,6 @@ const questionsSlice = createSlice({
     builder
       .addCase(fetchQuestions.fulfilled, (state, action) => {
         state.questions = action.payload;
-        console.log('actionpayload',state);
       })
       .addCase(postResponse.fulfilled, (state, action) => {
         state.data = action.payload;
@@ -31,7 +30,6 @@ const questionsSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload;
-        console.log('state.user',state.user);
       })
       .addCase(fetchUserResult.fulfilled, (state, action) => {
         state.isLoading = false;

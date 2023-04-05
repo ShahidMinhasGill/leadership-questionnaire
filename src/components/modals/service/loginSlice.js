@@ -23,7 +23,6 @@ const loginSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload;
-        console.log('state.user',state.user);
       })
   },
 });

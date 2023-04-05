@@ -19,8 +19,6 @@ const QuestionSec = () => {
   const getUser = sessionStorage.getItem('user');
   const token = sessionStorage.getItem('token');
   const user = JSON.parse(getUser);
-
- console.log('userId',user?.id);
   const [sentRespons, setSentRespons] = useState({
     user_id: 0,
     question: 0,
