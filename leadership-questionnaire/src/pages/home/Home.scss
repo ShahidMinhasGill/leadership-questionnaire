@@ -45,7 +45,7 @@
   }
     .ask-quistion {
       h2 {
-        font-size: 20px;
+        font-size: 14px;
         font-weight: 600;
         color: #59358c;
       }
@@ -78,7 +78,11 @@
         font-weight: 500;
         color: #e0dee3;
       }
-     
+      h2 {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 0;
+      }
       ul {
        
         margin-top: 20px;
@@ -311,8 +315,8 @@
     .question-sec {
       .progress-bar {
         position: relative;
-        height: 5px;
-        width: 220px;
+        height: 20px;
+        width: 290px;
         border-radius: 50px;
         border: 1px solid #333;
       }
@@ -326,64 +330,20 @@
     .question-sec {
       .progress-bar {
         position: relative;
-        height: 6px;
+        height: 20px;
         width: 200px;
         border-radius: 50px;
         border: 1px solid #333;
-      }
-    }
-    .quiz-container{
-      .question-sec {
-        .progress-bar {
-          position: relative;
-          height: 5px;
-          width: 165px;
-          border-radius: 50px;
-          border: 1px solid #333;
-        }
-      }
-      .ask-quistion {
-        h2 {
-          font-size: 14px;
-          font-weight: 600;
-          color: #59358c;
-        }
-      }
-      .toop-sec {
-        h3 {
-          font-size: 19px;
-          font-weight: 700;
-          color: #59358C;
-      }
-      .tool-icon {
-        opacity: 1;
-        height: 25px;
-        width: 25px;
-        margin-right: 0.5rem;
-    }
-      p{
-        font-size: 14px;
-      }
       }
     }
   }
 }
 @media (max-width: 425px) {
   .home {
-    .quiz-container{
-      .toop-sec {
-      p{
-        font-size: 14px;
-      }
-      }
+    .ask-quistion {
+      h2 {
+        font-size: 12px;
     }
-    .question-sec{
-      .back-btn {
-        button {
-          padding: 4px 14px;
-        }
-      }
     }
-   
   }
 }

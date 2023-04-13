@@ -69,7 +69,7 @@ function Header() {
       <Container>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         {/* <BsPersonCircle className="profile-icon" /> */}
-        <div className=" col-2 profile-icon " >
+        <div className="col-lg-4 col-12 profile-icon " >
          <img src={logo} alt="" />
         </div>
         
@@ -78,28 +78,13 @@ function Header() {
             <Link to="/">Mentoring & board</Link>
             <Link to="/">Your Home Page</Link>
             <Link to="/">stauart.saywell1@bethbusiness.com</Link>
-            <Link to="#" onClick={() => {
-  if (token) {
-    // Remove the token from local storage
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
-
-    // Clear the token value from state
-    setState(prevState => ({
-      ...prevState,
-      token: undefined,
-      user: undefined
-    }));
-  } else {
-    // Show the login modal
-    setState(prevState => ({
-      ...prevState,
-      showLogin: true
-    }));
-  }
-}}>
-  {!token ? 'Login' : 'Logout'}
-</Link>
+            <Link to="#"   onClick={() =>  setState(prevState => ({
+                      ...prevState,
+                      showSignUp: true,
+                    }))}>
+                 {!token ?  'Login' : 'Logout'}
+              {/* Login */}
+            </Link>
              
 
             <hr />
@@ -148,6 +133,14 @@ function Header() {
        
       )}
         {value.includes(2) && (
+        // <Dropdown>
+        //   <Dropdown.Toggle variant="light" id="dropdown-basic">{dropdownValue}</Dropdown.Toggle>
+        //   <Dropdown.Menu>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 1')}>Option 1</Dropdown.Item>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 2')}>Option 2</Dropdown.Item>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 3')}>Option 3</Dropdown.Item>
+        //   </Dropdown.Menu>
+        // </Dropdown>
         <Nav className="ms-auto dir">
         <select className="select" defaultValue={selected} onChange={handleChange}>
           {languages.map((language, index) => (
@@ -163,9 +156,17 @@ function Header() {
       </Nav>
       )}
         {value.includes(2) && (
+        // <Dropdown>
+        //   <Dropdown.Toggle variant="light" id="dropdown-basic">{dropdownValue}</Dropdown.Toggle>
+        //   <Dropdown.Menu>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 1')}>Option 1</Dropdown.Item>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 2')}>Option 2</Dropdown.Item>
+        //     <Dropdown.Item onClick={() => setDropdownValue('Option 3')}>Option 3</Dropdown.Item>
+        //   </Dropdown.Menu>
+        // </Dropdown>
         <Nav className="ms-auto dir">
 
-                      <Link to="/" className='select text-decoration-none join-us'>Join us</Link>
+                      <Link to="/" className='select text-decoration-none'>Join us</Link>
       
         {/* {firstName ? (
           <div className="welcomeMessage">Hi {firstName}</div>
@@ -188,24 +189,33 @@ function Header() {
       </div>
    
       </Container>
-      <SignUpModal
+              <LoginModal
+                    show={state.showLogin}
+                    onHide={() =>  setState(prevState => ({
+                              ...prevState,
+                              showLogin: false,
+                            }))}
+                    // welcomeMessage={() => this.welcomeMessage("showLogin")}
+                    welcomeMessage={() =>  setState(prevState => ({
+                      ...prevState,
+                      showLogin: state.showLogin
+                    }))}
+                    hideLoginShowSignUp={() =>  setState(prevState => ({
+                      ...prevState,
+                      showSignUp:true,
+                      showLogin: false
+                    }))}
+                          />
+                <SignUpModal
                     show={state.showSignUp}
                     onHide={() => setState({ ...state, showSignUp: false })}
-                    hideSignUpShowLogin={() => setState({ ...state, showLogin: true, showSignUp: false })}
                     // welcomeMessage={() => welcomeMessage("showSignUp")}
-                    // hideSignUpShowLogin={() =>  setState(prevState => ({
-                    //   ...prevState,
-                    //   showLogin: true, showSignUp: false
-                    // }))}
+                    hideSignUpShowLogin={() =>  setState(prevState => ({
+                      ...prevState,
+                      showSignUp:false,
+                      showLogin: true
+                    }))}
                 />
-              <LoginModal
-                show={state.showLogin}
-                onHide={() => setState({ ...state, showLogin: false })}
-                    
-                    // welcomeMessage={() => this.welcomeMessage("showLogin")}
-                    hideSignUpShowLogin={() => setState({ ...state,  showLogin: false, showSignUp: true })}
-                          />
-            
     </Container>
     </div>
     </>
