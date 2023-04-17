@@ -123,7 +123,7 @@ export default function Outcomes() {
                 <br />
                 {description5Lines[2]}
                 <br />
-                <button className="btn-style">find out More</button>
+                <button className="btn-style">Find out more</button>
               </p>
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function Outcomes() {
           <div className="col-11 botom-sec">
             <hr />
             <div className="row">
-              <h2>you might also like</h2>
+              <h2>You might also like</h2>
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">

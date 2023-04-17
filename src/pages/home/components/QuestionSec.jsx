@@ -100,6 +100,7 @@ useEffect(() => {
     // question_left: question.length - activeQuestion,
   }))
   // console.log('question_left',result.question_left);
+  window.scrollTo(0, 0)
 }, [activeQuestion]);
 
 useEffect(() => {
@@ -240,8 +241,9 @@ const questionId = questions[activeQuestion]?.questionId;
           </div>
              <div className="col-lg-11 col-md-12 ">
               <p>  
-              After an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader.
+              an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader.
                In order to better serve your needs, we have built this questionnaire that allows you to identify your segmentation type. 
+               <br />
                <br />
               Follow through these questions to learn which of the six leadership segments you most exemplify, and how this information can help you to become a better leader.
               <br />
@@ -301,8 +303,7 @@ const questionId = questions[activeQuestion]?.questionId;
                 type="radio"
                 name={answer}
                 checked={checked === answer}
-                onChange={handleCheckboxChange}
-               
+                onChange={() => setChecked(answer)}               
                 id={`flexCheckChecked${index}`}
               />
               {/* <h2>{index}</h2> */}
