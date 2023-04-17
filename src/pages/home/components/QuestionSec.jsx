@@ -100,7 +100,6 @@ useEffect(() => {
     // question_left: question.length - activeQuestion,
   }))
   // console.log('question_left',result.question_left);
-  window.scrollTo(0, 0)
 }, [activeQuestion]);
 
 useEffect(() => {
