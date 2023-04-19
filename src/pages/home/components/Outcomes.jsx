@@ -32,7 +32,8 @@ export default function Outcomes() {
   const description9Lines =  fetchResult?.leadership_type?.description9?.split("__");
   const description10Lines =  fetchResult?.leadership_type?.description10?.split("__");
   const description11Lines =  fetchResult?.leadership_type?.description11?.split("__");
-  console.log('description5Lines',description7Lines);
+  // const description12Lines =  fetchResult?.leadership_type?.description12?.split("__");
+  // console.log('description12Lines',description12Lines);
   const [links, setLinks] = useState([]);
 
   const externalLinks = fetchResult?.leadership_type?.external_links?.split(",");
@@ -97,13 +98,16 @@ export default function Outcomes() {
 
             ))}
           </div>
+          {description3Lines.length > 0 && description3Lines[0] &&
+
           <div
             className="col-11  friend-sec"
-            style={{ background: "#F3F3F5",border:'1px solid red' }}
+            style={{ background: "#F3F3F5"}}
           >
               <span dangerouslySetInnerHTML={{__html: description3Lines[0]}} />
               <span className="pera">{description3Lines[1]}​ </span>
           </div>
+}
           <div className="col-11 compare-sec ">
             <hr className="mt-5" />
             <div className="row mt-4 ">
@@ -218,6 +222,8 @@ export default function Outcomes() {
           <div className="col-11 botom-sec">
             <hr />
             <div className="row">
+            {description7Lines.length > 0 && description7Lines[0] &&
+
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
@@ -230,6 +236,9 @@ export default function Outcomes() {
                   </div>
                 </div>
               </div>
+}
+              {description8Lines.length > 0 && description8Lines[0] &&
+
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
@@ -243,6 +252,9 @@ export default function Outcomes() {
                   </div>
                 </div>
               </div>
+}
+              {description9Lines.length > 0 && description9Lines[0] &&
+
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
@@ -256,6 +268,9 @@ export default function Outcomes() {
                   </div>
                 </div>
               </div>
+              }
+              {description10Lines.length > 0 && description10Lines[0] &&
+
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
@@ -264,61 +279,55 @@ export default function Outcomes() {
                       <span  dangerouslySetInnerHTML={{__html: description10Lines[1]}}></span>
                     </p>
                     <button  className="btn-style" dangerouslySetInnerHTML={{__html: description10Lines[2]}}></button>
-
-                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
                   </div>
                 </div>
               </div>
+              }
+              {description11Lines.length > 0 && description11Lines[0] &&
+              <div className="col-6">
+                <div class="card">
+                  <div class="card-body">
+                  <a className="card-title" dangerouslySetInnerHTML={{__html: description11Lines[0]}} ></a>
+                    <p class="card-text pt-3">
+                      <span  dangerouslySetInnerHTML={{__html: description11Lines[1]}}></span>
+                    </p>
+                    <button  className="btn-style" dangerouslySetInnerHTML={{__html: description11Lines[2]}}></button>
+                  </div>
+                </div>
+              </div>
+              }
+
+            
              
             </div>
           </div>
           <div className="col-11 botom-sec">
             <hr />
-            <div className="row">
+            {description5Lines.length > 0 && description5Lines[0] &&
+  <div className="row">
+    <h2>You might also like</h2>
+    <div className="col-6">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description5Lines[0]}}>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div className="col-6">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description11Lines[0]}}>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+}
 
-              <h2 >You might also like</h2>
-              <div className="col-6">
-                <div class="card">
-                  <div class="card-body">
-                  {/* <a className="card-title" href={links[0]?.link} > {links[0]?.text} </a> */}
-                    <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description5Lines[0]}}>
-                     
-                    </p>
-                               
-                 </div>
-                </div>
-              </div>
-              <div className="col-6">
-                <div class="card">
-                  <div class="card-body">
-                  {/* <a className="card-title" href={links[0]?.link} > {links[0]?.text} </a> */}
-                    <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description11Lines[0]}}>
-                     
-                    </p>
-                               
-                 </div>
-                </div>
-              </div>
-              {/* <div className="col-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">How to communicate effectively</h5>
-                    <p class="card-text">
-                      Getting your message across is super important. So, take a
-                      look at this course to look at:
-                    </p>
-                    <ul>
-                      <li>How to avoid miscommunication.</li>
-                      <li>
-                        How to use your non-verbal communication body in your
-                        favour!
-                      </li>
-                    </ul>
-                    <button className="btn-style">Download here</button>
-                  </div>
-                </div>
-              </div> */}
-            </div>
+  
+
+
           </div>
         </>
       ) : (
