@@ -25,10 +25,19 @@ export default function Outcomes() {
   const description2Lines = fetchResult?.leadership_type?.description2?.split("\r");
   const description3Lines =  fetchResult?.leadership_type?.description3?.split("”");
   const description5Lines =  fetchResult?.leadership_type?.description5?.split("\\r\\n");
+  const description4Lines =  fetchResult?.leadership_type?.description4?.split("__");
+  const description6Lines =  fetchResult?.leadership_type?.description6?.split("?");
+  const description7Lines =  fetchResult?.leadership_type?.description7?.split("__");
+  const description8Lines =  fetchResult?.leadership_type?.description8?.split("__");
+  const description9Lines =  fetchResult?.leadership_type?.description9?.split("__");
+  const description10Lines =  fetchResult?.leadership_type?.description10?.split("__");
+  const description11Lines =  fetchResult?.leadership_type?.description11?.split("__");
+  console.log('description5Lines',description7Lines);
   const [links, setLinks] = useState([]);
 
   const externalLinks = fetchResult?.leadership_type?.external_links?.split(",");
   const externalLinksText = fetchResult?.leadership_type?.external_links_text?.split(",");
+  console.log('externalLinks',externalLinks);
   
 
  
@@ -48,6 +57,9 @@ export default function Outcomes() {
       setLinks(linksAndTexts);
     }
   }, [fetchResult]);
+  function handleDownloadClick() {
+    window.location.href = description7Lines[2];
+  }
   console.log('get_image',fetchResult?.leadership_type?.get_image);
   return (
     <div className="row outcomes d-flex justify-content-center">
@@ -73,32 +85,34 @@ export default function Outcomes() {
         <>
           <div className="col-11 top-sec mt-4">
             <h2>{fetchResult.leadership_type.title}</h2>
-            <p>{fetchResult.leadership_type.description}</p>
-            <h2 className="mt-4">{description2Lines[0]}</h2>
+
+            {/* <p>{fetchResult.leadership_type.description}</p> */}
+            <p dangerouslySetInnerHTML={{__html: fetchResult.leadership_type.description}} />
+            <h2 className="mt-4" dangerouslySetInnerHTML={{__html: description2Lines[0]}} />
+            {/* <p>
+              {description2Lines[2]}
+            </p> */}
             {description2Lines.slice(1).map((line, index) => (
-              <p className="mt-3" key={index}>
-                {line}
-              </p>
+                     <div key={index} dangerouslySetInnerHTML={{__html: line}} />
+
             ))}
           </div>
           <div
             className="col-11  friend-sec"
-            style={{ background: "#F3F3F5" }}
+            style={{ background: "#F3F3F5",border:'1px solid red' }}
           >
-            <p>
-              <span>{description3Lines[0]}​ </span>
-              <br />
+              <span dangerouslySetInnerHTML={{__html: description3Lines[0]}} />
               <span className="pera">{description3Lines[1]}​ </span>
-            </p>
           </div>
           <div className="col-11 compare-sec ">
             <hr className="mt-5" />
             <div className="row mt-4 ">
               <div className="col-6 ">
-                <h2>How {fetchResult.leadership_type.name} compare</h2>
+                <h2 dangerouslySetInnerHTML={{__html: description4Lines[0]}} />
                 <p className="mt-4">
-                  {fetchResult.leadership_type.description4}
-                 
+                 {/* {description4Lines[1]}   */}
+                 <span  dangerouslySetInnerHTML={{__html: description4Lines[1]}}></span>
+   
                 </p>
               </div>
               <div className="col-6">
@@ -112,19 +126,13 @@ export default function Outcomes() {
             </div>
             <hr />
             <hr />
-            <h3>{description5Lines[0]} </h3>
+            <div className="pera-" dangerouslySetInnerHTML={{__html: description6Lines[0]}} />
             <div
               className="friend-sec"
               style={{ background: "#59358C" }}
             >
-              <p className="pera-2">
-              {description5Lines[1]}
-                <br />
-                <br />
-                {description5Lines[2]}
-                <br />
+              <div className="pera-2" dangerouslySetInnerHTML={{__html: description6Lines[1]}} />
                 <button className="btn-style">Find out more</button>
-              </p>
             </div>
           </div>
           {/* <div className="col-11 card-sec">
@@ -210,44 +218,85 @@ export default function Outcomes() {
           <div className="col-11 botom-sec">
             <hr />
             <div className="row">
-              <h2>You might also like</h2>
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
-                  <a className="card-title" href={links[0]?.link} > {links[0]?.text} </a>
+                  <a className="card-title" dangerouslySetInnerHTML={{__html: description7Lines[0]}} ></a>
                     <p class="card-text pt-3">
-                      Getting your message across is super important. So, take a
-                      look at this course to look at:
+                      <span  dangerouslySetInnerHTML={{__html: description7Lines[1]}}></span>
                     </p>
-                   
-                    <button className="btn-style">Download here</button>
+                    <button  className="btn-style" dangerouslySetInnerHTML={{__html: description7Lines[2]}}></button>
+                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
                   </div>
                 </div>
               </div>
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
-                  <a className="card-title" href={links[1]?.link} > {links[1]?.text} </a>
+                  <a className="card-title" dangerouslySetInnerHTML={{__html: description8Lines[0]}} ></a>
                     <p class="card-text pt-3">
-                      Getting your message across is super important. So, take a
-                      look at this course to look at:
+                      <span  dangerouslySetInnerHTML={{__html: description8Lines[1]}}></span>
                     </p>
-                   
-                    <button className="btn-style">Download here</button>
+                    <button  className="btn-style" dangerouslySetInnerHTML={{__html: description8Lines[2]}}></button>
+
+                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
                   </div>
                 </div>
               </div>
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
-                  <a className="card-title" href={links[2]?.link} > {links[2]?.text} </a>
+                  <a className="card-title" dangerouslySetInnerHTML={{__html: description9Lines[0]}} ></a>
                     <p class="card-text pt-3">
-                      Getting your message across is super important. So, take a
-                      look at this course to look at:
+                      <span  dangerouslySetInnerHTML={{__html: description9Lines[1]}}></span>
                     </p>
-                   
-                    <button className="btn-style">Download here</button>
+                    <button  className="btn-style" dangerouslySetInnerHTML={{__html: description9Lines[2]}}></button>
+
+                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
                   </div>
+                </div>
+              </div>
+              <div className="col-6">
+                <div class="card">
+                  <div class="card-body">
+                  <a className="card-title" dangerouslySetInnerHTML={{__html: description10Lines[0]}} ></a>
+                    <p class="card-text pt-3">
+                      <span  dangerouslySetInnerHTML={{__html: description10Lines[1]}}></span>
+                    </p>
+                    <button  className="btn-style" dangerouslySetInnerHTML={{__html: description10Lines[2]}}></button>
+
+                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+          </div>
+          <div className="col-11 botom-sec">
+            <hr />
+            <div className="row">
+
+              <h2 >You might also like</h2>
+              <div className="col-6">
+                <div class="card">
+                  <div class="card-body">
+                  {/* <a className="card-title" href={links[0]?.link} > {links[0]?.text} </a> */}
+                    <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description5Lines[0]}}>
+                     
+                    </p>
+                               
+                 </div>
+                </div>
+              </div>
+              <div className="col-6">
+                <div class="card">
+                  <div class="card-body">
+                  {/* <a className="card-title" href={links[0]?.link} > {links[0]?.text} </a> */}
+                    <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description11Lines[0]}}>
+                     
+                    </p>
+                               
+                 </div>
                 </div>
               </div>
               {/* <div className="col-6">
