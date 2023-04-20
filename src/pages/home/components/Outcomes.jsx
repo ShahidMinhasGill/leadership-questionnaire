@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import img1 from "../../../assets/images/1.jpg";
+import carefulcollaborators from "../../../assets/images/carefulcollaborators.jpg";
+import culturecreators from "../../../assets/images/culturecreators.jpg";
+import determined from "../../../assets/images/determined.jpg";
+import IntuitiveDecider from "../../../assets/images/IntuitiveDecider.jpg";
+import specialistleaders from "../../../assets/images/specialistleaders.jpg";
 import { fetchUserResult } from "../service/HomeApi";
 export default function Outcomes() {
   const dispatch = useDispatch();
@@ -24,16 +29,18 @@ export default function Outcomes() {
 
   const description2Lines = fetchResult?.leadership_type?.description2?.split("\r");
   const description3Lines =  fetchResult?.leadership_type?.description3?.split("”");
-  const description5Lines =  fetchResult?.leadership_type?.description5?.split("\\r\\n");
+  const description5Lines =  fetchResult?.leadership_type?.description5?.split("?");
   const description4Lines =  fetchResult?.leadership_type?.description4?.split("__");
-  const description6Lines =  fetchResult?.leadership_type?.description6?.split("?");
+  const description6Lines =  fetchResult?.leadership_type?.description6?.split("__");
   const description7Lines =  fetchResult?.leadership_type?.description7?.split("__");
   const description8Lines =  fetchResult?.leadership_type?.description8?.split("__");
   const description9Lines =  fetchResult?.leadership_type?.description9?.split("__");
   const description10Lines =  fetchResult?.leadership_type?.description10?.split("__");
   const description11Lines =  fetchResult?.leadership_type?.description11?.split("__");
+  const description13Lines =  fetchResult?.leadership_type?.description13?.split("__");
+  const description14Lines =  fetchResult?.leadership_type?.description14?.split("__");
   // const description12Lines =  fetchResult?.leadership_type?.description12?.split("__");
-  // console.log('description12Lines',description12Lines);
+  console.log('description12Lines',fetchResult?.leadership_type);
   const [links, setLinks] = useState([]);
 
   const externalLinks = fetchResult?.leadership_type?.external_links?.split(",");
@@ -61,7 +68,8 @@ export default function Outcomes() {
   function handleDownloadClick() {
     window.location.href = description7Lines[2];
   }
-  console.log('get_image',fetchResult?.leadership_type?.get_image);
+  const leaderShiptype = fetchResult?.leadership_type?.name
+  console.log('leaderShiptype',leaderShiptype);
   return (
     <div className="row outcomes d-flex justify-content-center">
       {fetchResult?.leadership_type ? (
@@ -120,6 +128,22 @@ export default function Outcomes() {
                 </p>
               </div>
               <div className="col-6">
+              {/* {fetchResult?.leadership_type?.get_image ? (
+              <img src={fetchResult?.leadership_type?.get_image} alt="" />
+            ) : leaderShiptype === 'Collective Adventurer' ? (
+              <img src={img1} alt="" />
+            ) : leaderShiptype === 'Determined Driver' ? (
+              <img src={determined} alt="" />
+            ) : leaderShiptype === 'Intuitive Decider' ? (
+              <img src={IntuitiveDecider} alt="" />
+            ) : leaderShiptype === 'Culture Creator' ? (
+              <img src={culturecreators} alt="" />
+            ) : leaderShiptype === 'Methodical Specialist' ? (
+              <img src={specialistleaders} alt="" />
+            ) : leaderShiptype === 'Careful Collaborator' ? (
+              <img src={carefulcollaborators} alt="" />
+            ) : null} */}
+           
                 <img src={img1} alt="" />
                 {fetchResult?.leadership_type?.get_image ? (
                   <img src={fetchResult?.leadership_type?.get_image} alt="" />
@@ -130,12 +154,12 @@ export default function Outcomes() {
             </div>
             <hr />
             <hr />
-            <div className="pera-" dangerouslySetInnerHTML={{__html: description6Lines[0]}} />
+            <div className="pera-" dangerouslySetInnerHTML={{__html: description5Lines[0]}} />
             <div
               className="friend-sec"
               style={{ background: "#59358C" }}
             >
-              <div className="pera-2" dangerouslySetInnerHTML={{__html: description6Lines[1]}} />
+              <div className="pera-2" dangerouslySetInnerHTML={{__html: description5Lines[1]}} />
                 <button className="btn-style">Find out more</button>
             </div>
           </div>
@@ -222,6 +246,21 @@ export default function Outcomes() {
           <div className="col-11 botom-sec">
             <hr />
             <div className="row">
+            {description6Lines.length > 0 && description6Lines[0] &&
+
+              <div className="col-6">
+                <div class="card">
+                  <div class="card-body">
+                  <a className="card-title" dangerouslySetInnerHTML={{__html: description6Lines[0]}} ></a>
+                    <p class="card-text pt-3">
+                      <span  dangerouslySetInnerHTML={{__html: description6Lines[1]}}></span>
+                    </p>
+                    <button  className="btn-style" dangerouslySetInnerHTML={{__html: description6Lines[2]}}></button>
+                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
+                  </div>
+                </div>
+              </div>
+}
             {description7Lines.length > 0 && description7Lines[0] &&
 
               <div className="col-6">
@@ -279,11 +318,14 @@ export default function Outcomes() {
                       <span  dangerouslySetInnerHTML={{__html: description10Lines[1]}}></span>
                     </p>
                     <button  className="btn-style" dangerouslySetInnerHTML={{__html: description10Lines[2]}}></button>
+
+                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
                   </div>
                 </div>
               </div>
               }
               {description11Lines.length > 0 && description11Lines[0] &&
+
               <div className="col-6">
                 <div class="card">
                   <div class="card-body">
@@ -292,38 +334,45 @@ export default function Outcomes() {
                       <span  dangerouslySetInnerHTML={{__html: description11Lines[1]}}></span>
                     </p>
                     <button  className="btn-style" dangerouslySetInnerHTML={{__html: description11Lines[2]}}></button>
+
+                    {/* <button onClick={handleDownloadClick} className="btn-style">Download here</button> */}
                   </div>
                 </div>
               </div>
               }
-
-            
+          
              
             </div>
           </div>
           <div className="col-11 botom-sec">
             <hr />
-            {description5Lines.length > 0 && description5Lines[0] &&
+        
   <div className="row">
-    <h2>You might also like</h2>
-    <div className="col-6">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description5Lines[0]}}>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div className="col-6">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description11Lines[0]}}>
-          </p>
-        </div>
-      </div>
-    </div>
+  {description13Lines.length > 0 && description13Lines[0] &&
+             <>
+             <h2 dangerouslySetInnerHTML={{__html: description13Lines[0]}}></h2>
+               <div className="col-6">
+                 <div class="card">
+                   <div class="card-body">
+                     <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description13Lines[1]}}>
+                     </p>
+                   </div>
+                 </div>
+               </div>
+             </>
+            }
+              {description14Lines.length > 0 && description14Lines[0] &&
+              <div className="col-6">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-text pt-3" dangerouslySetInnerHTML={{__html: description14Lines[0]}}>
+                    </p>
+                  </div>
+                </div>
+              </div>
+               }
   </div>
-}
+
 
   
 
