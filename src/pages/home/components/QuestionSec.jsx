@@ -240,7 +240,7 @@ const questionId = questions[activeQuestion]?.questionId;
           </div>
              <div className="col-lg-11 col-md-12 ">
               <p>  
-              an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader.
+               After an extensive segmentation of small and medium-sized business leaders their motivations and their approaches to leadership and support, we identified six types of business leader.
                In order to better serve your needs, we have built this questionnaire that allows you to identify your segmentation type. 
                <br />
                <br />
