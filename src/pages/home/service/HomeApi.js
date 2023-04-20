@@ -50,7 +50,8 @@ export const fetchUserResult = createAsyncThunk(
     const getUser = sessionStorage.getItem('user');
     const token = sessionStorage.getItem('token');
     const user = JSON.parse(getUser);
-    const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${user?.id}/`, {
+    const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${user?.id}/?type=Culture Creator
+    `, {
     });
     // const response = await axios.get(`https://walrus-app-xqntt.ondigitalocean.app/user_result_api/${id}/`);
     return response.data;

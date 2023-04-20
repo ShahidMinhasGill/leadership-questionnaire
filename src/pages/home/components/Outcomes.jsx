@@ -128,28 +128,33 @@ export default function Outcomes() {
                 </p>
               </div>
               <div className="col-6">
-              {/* {fetchResult?.leadership_type?.get_image ? (
-              <img src={fetchResult?.leadership_type?.get_image} alt="" />
-            ) : leaderShiptype === 'Collective Adventurer' ? (
-              <img src={img1} alt="" />
-            ) : leaderShiptype === 'Determined Driver' ? (
-              <img src={determined} alt="" />
-            ) : leaderShiptype === 'Intuitive Decider' ? (
-              <img src={IntuitiveDecider} alt="" />
-            ) : leaderShiptype === 'Culture Creator' ? (
-              <img src={culturecreators} alt="" />
-            ) : leaderShiptype === 'Methodical Specialist' ? (
-              <img src={specialistleaders} alt="" />
-            ) : leaderShiptype === 'Careful Collaborator' ? (
-              <img src={carefulcollaborators} alt="" />
-            ) : null} */}
+          
+                {leaderShiptype === 'Determined Driver' && (
+                  <img src={determined} alt="" />
+                )}
+                {leaderShiptype === 'Intuitive Decider' && (
+                  <img src={IntuitiveDecider} alt="" />
+                )}
+                {leaderShiptype === 'Culture Creator' && (
+                  <img src={culturecreators} alt="" />
+                )}
+                {leaderShiptype === 'Methodical Specialist' && (
+                  <img src={specialistleaders} alt="" />
+                )}
+                {leaderShiptype === 'Careful Collaborator' && (
+                  <img src={carefulcollaborators} alt="" />
+                )}
+                {leaderShiptype === 'Collective Adventurer' && (
+                  <img src={img1} alt="" />
+                )}
+
            
-                <img src={img1} alt="" />
+                {/* <img src={img1} alt="" />
                 {fetchResult?.leadership_type?.get_image ? (
                   <img src={fetchResult?.leadership_type?.get_image} alt="" />
                 ) : (
                   <img src={img1} alt="" />
-                )}
+                )} */}
               </div>
             </div>
             <hr />

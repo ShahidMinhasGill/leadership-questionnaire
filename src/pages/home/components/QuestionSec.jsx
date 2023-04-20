@@ -312,6 +312,8 @@ const questionId = questions[activeQuestion]?.questionId;
             </div>
           </div>
              ))}
+                       <Outcomes />
+
         </div>
       <div className="row question-sec mt-5 p-3" style={{borderRadius:'0px 0 10px 15px'}} >
         <div className="col-lg-1 col-md-2 col-4 d-flex align-items-center back-btn">
@@ -338,7 +340,6 @@ const questionId = questions[activeQuestion]?.questionId;
       ) : (
         <div className="result">
           <h3>Result</h3>
-          <Outcomes />
 
           <div>
     </div>

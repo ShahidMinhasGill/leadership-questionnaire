@@ -163,12 +163,19 @@
   }
   .outcomes{
     .btn-style{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      a{
+        color: white;
+        text-decoration: none;
+      }
       border-radius: 21px;
       width: 133px;
       height: 39px;
       background-color: rgba(230,0,125, 1);
-      border: none;
-      margin-top: 1.5rem;
+      border: none;   
+    margin-left: 56px;
       color: rgba(255,255,255,1);
       font-size: 16px;
       font-weight: 700;
@@ -251,7 +258,11 @@
         text-align: left;
       }
       .pera-2{
-        padding: 30px 0px 10px 34px;
+        padding: 40px 0px 0px 34px;
+        opacity: 1;
+        color: rgba(255,255,255,1);
+       p{
+        padding: 0px 0px 10px 34px;
         opacity: 1;
         color: rgba(255,255,255,1);
           font-size: 17px;
@@ -259,6 +270,7 @@
         font-style: normal;
         letter-spacing: 0px;
         text-align: left;
+       }
       }
      
     }
